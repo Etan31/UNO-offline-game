@@ -7,25 +7,22 @@
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-  <div id="game-container">
-    <div id="player-cards" class="cards-container">
-      <h2>Your Cards</h2>
-      <div id="player-hand"></div>
-      <button id="draw-card">Draw Card</button>
-    </div>
+    <div id="game-board">
+        <div id="player-section">
+          <h3>Player</h3>
+          <div id="player-hand"></div>
+        </div>
+        <div id="opponent-section">
+          <h3>Opponent</h3>
+          <div id="opponent-hand"></div>
+        </div>
+        <div id="scores">
+          <p>Player Score: <span id="player-score">0</span></p>
+          <p>Opponent Score: <span id="opponent-score">0</span></p>
+        </div>
+      </div>
+      
 
-    <div id="opponent-cards" class="cards-container">
-      <h2>Opponent's Cards</h2>
-      <div id="opponent-hand"></div>
-    </div>
-
-    <div id="score-board">
-      <h2>Score</h2>
-      <div>Player: <span id="player-score">0</span></div>
-      <div>Opponent: <span id="opponent-score">0</span></div>
-    </div>
-  </div>
-
-  <script src="scripts/script.js"></script>
+  <script src="./scripts/script.js"></script>
 </body>
 </html>

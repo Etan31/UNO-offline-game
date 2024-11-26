@@ -31,4 +31,23 @@ body {
   #score-board {
     margin-top: 20px;
   }
+
+
+  .card {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  #player-hand, #opponent-hand {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
   
