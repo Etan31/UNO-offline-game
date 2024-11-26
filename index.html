@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNO Game</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <div id="game-container">
+    <div id="player-cards" class="cards-container">
+      <h2>Your Cards</h2>
+      <div id="player-hand"></div>
+      <button id="draw-card">Draw Card</button>
+    </div>
+
+    <div id="opponent-cards" class="cards-container">
+      <h2>Opponent's Cards</h2>
+      <div id="opponent-hand"></div>
+    </div>
+
+    <div id="score-board">
+      <h2>Score</h2>
+      <div>Player: <span id="player-score">0</span></div>
+      <div>Opponent: <span id="opponent-score">0</span></div>
+    </div>
+  </div>
+
+  <script src="scripts/script.js"></script>
+</body>
+</html>
