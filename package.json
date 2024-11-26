@@ -1,0 +1,11 @@
+{
+  "name": "uno_game",
+  "version": "1.0.0",
+  "description": "offline game, similar to the popular UNO game.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tristan Ehron A. Tumbaga",
+  "license": "ISC"
+}
