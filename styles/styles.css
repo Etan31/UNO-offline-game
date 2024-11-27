@@ -1,53 +1,31 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  #game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .cards-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #player-hand button {
-    margin: 5px;
-  }
-  
-  button {
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  #score-board {
-    margin-top: 20px;
-  }
+* {
+  margin: 0;
+  padding: 0;
+}
 
+ body{
+  color:white;
+  background-color: black;
+  background-image: radial-gradient(#642B73, rgba(36, 10, 43, 0.8), rgba(0, 0, 0, 0.9));
+ }
 
-  .card {
-    display: inline-block;
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    background-color: #f9f9f9;
-    color: #333;
-  }
-  
-  #player-hand, #opponent-hand {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
+header{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+}
+
+button.info {
+  padding: 5px 13px;
+  border-radius: 5px;
+  border:none;
+  color: white;
+  background-color: #642B73;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
