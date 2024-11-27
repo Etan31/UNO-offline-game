@@ -7,21 +7,42 @@
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <div id="game-board">
-        <div id="player-section">
-          <h3>Player</h3>
-          <div id="player-hand"></div>
-        </div>
-        <div id="opponent-section">
-          <h3>Opponent</h3>
-          <div id="opponent-hand"></div>
-        </div>
-        <div id="scores">
-          <p>Player Score: <span id="player-score">0</span></p>
-          <p>Opponent Score: <span id="opponent-score">0</span></p>
-        </div>
+  <header>
+    <button class="info">i</button>
+  </header>
+  <main>
+    <h1>Uno Offile Game</h1>
+    
+
+    <div class="mycards">
+      <h2 id="player1">Player 1</h2>
+
+      <div class="line"></div>
+      <div class="card-container" id="yourcards" >
+
       </div>
-      
+    </div>
+
+
+    <div class="opponentcards" >
+      <h2 id="player2">Player 2</h2>
+      <div class="line"></div>
+      <div class="card-container" id="opponentcards"></div>
+    </div>
+
+    
+    <div class="deck-of-cards">
+      <div class="used-cards"></div>
+      <div class="stack-cards"></div>
+    </div>
+
+    <div>
+      <div class="score-container">
+        <div class="yourscore">Your score (player 1)</div>
+        <div class="opponentscore"> Player 2 score</div>
+      </div>
+    </div>
+  </main>
 
   <script src="./scripts/script.js"></script>
 </body>
