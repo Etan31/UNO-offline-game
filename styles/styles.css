@@ -1,48 +1,48 @@
 @font-face {
   font-family: 'Merienda'; /* Font family name */
-  src: url('fonts/Merienda-Light.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Light.ttf') format('truetype');
   font-weight: 300; /* Light */
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Merienda';
-  src: url('fonts/Merienda-Regular.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Regular.ttf') format('truetype');
   font-weight: 400; /* Regular (default) */
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Merienda';
-  src: url('fonts/Merienda-Medium.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Medium.ttf') format('truetype');
   font-weight: 500; /* Medium */
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Merienda';
-  src: url('fonts/Merienda-Semibold.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Semibold.ttf') format('truetype');
   font-weight: 600; /* Semibold */
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Merienda';
-  src: url('fonts/Merienda-Bold.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Bold.ttf') format('truetype');
   font-weight: 700; /* Bold */
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Merienda';
-  src: url('fonts/Merienda-Extrabold.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Extrabold.ttf') format('truetype');
   font-weight: 800; /* Extrabold */
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Merienda';
-  src: url('fonts/Merienda-Black.ttf') format('truetype');
+  src: url('./../assets/fonts/Merienda-Black.ttf') format('truetype');
   font-weight: 900; /* Black */
   font-style: normal;
 }
@@ -51,11 +51,17 @@
   margin: 0;
   padding: 0;
 }
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 body{
   color:white;
   background-color: black;
-  font-family: 'BhinekaScript',  sans-serif;
+  font-family: 'Merienda', sans-serif; /* Fallback to sans-serif */
+  font-weight: 400;
   background-image: radial-gradient(#642B73, rgba(36, 10, 43, 0.8), rgba(0, 0, 0, 0.9));
  }
 
@@ -66,7 +72,7 @@ header{
 }
 
 button.info {
-  padding: 5px 13px;
+  padding: 5px 20px;
   border-radius: 5px;
   border:none;
   color: white;
@@ -77,5 +83,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
+  flex: 1;
 }
