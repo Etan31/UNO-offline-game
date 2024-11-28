@@ -70,13 +70,21 @@ header{
   justify-content: space-between;
   padding: 20px 20px;
 }
+h1 {
+  font-size: clamp(15px, 5vw, 22px);
+}
 
 button.info {
-  padding: 5px 20px;
+  padding: 5px 15px;
   border-radius: 5px;
   border:none;
   color: white;
   background-color: #642B73;
+}
+
+button.info:hover{
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.37);
 }
 
 main {
@@ -85,4 +93,40 @@ main {
   align-items: center;
   /* height: 100vh; */
   flex: 1;
+}
+
+
+.score-container {
+  display: flex;
+  position: fixed;
+  width: 96vw;
+  justify-content: space-between;
+  padding-inline: 20px
+}
+
+.opponentcards {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.mycards {
+  position: fixed;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+h2.player1, h2.player2 {
+  opacity: 60%;
+  font-size: clamp(12px, 10vw, 15px);
+}
+
+
+.player1 {
+  display: flex;
+  flex-direction: row-reverse;
 }
