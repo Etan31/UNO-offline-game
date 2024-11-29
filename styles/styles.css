@@ -130,3 +130,11 @@ h2.player1, h2.player2 {
   display: flex;
   flex-direction: row-reverse;
 }
+
+
+/* deck of cards */
+
+img.cardimg {
+  width: 55px;
+  height: auto; 
+}
