@@ -134,7 +134,17 @@ h2.player1, h2.player2 {
 
 /* deck of cards */
 
+.deck-of-cards {
+  display: flex;
+  gap:20px;
+}
+
 img.cardimg {
   width: 55px;
-  height: auto; 
+  height: auto;
+  border-radius: 5px;
+}
+
+.stack-cards {
+  width: 55px;
 }
