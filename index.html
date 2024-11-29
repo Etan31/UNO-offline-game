@@ -13,6 +13,8 @@
   </header>
   <main>
 
+
+    
     <div class="mycards">
       <h2 id="player1" class="player1">Player 1</h2>
 
@@ -36,14 +38,22 @@
     
     <div class="deck-of-cards">
       <div class="used-cards">
-        <img class="cardimg" src="./assets/imgs/back-cover/back-cover.png" alt="back-cover of uno cards">
+        <!-- dynamically added -->
       </div>
-      <div class="stack-cards"></div>
+      <div class="stack-cards">
+        <!-- dynamically added -->
+      </div>
     </div>
 
     <div class="score-container">
-      <div class="yourscore">Your score (player 1)</div>
-      <div class="opponentscore"> Player 2 score</div>
+      <div class="scores-section">
+        <p class="yourscore-p">Your score (player 1)</p>
+        <p class="scores" id="yourscore">0</p>
+      </div>
+      <div class="scores-section">
+        <p class="opponentscore-p"> Player 2 score</p>
+        <p class="scores" id="opponentscore">0</p>
+      </div>
     </div>
   </main>
 

@@ -137,6 +137,7 @@ h2.player1, h2.player2 {
 .deck-of-cards {
   display: flex;
   gap:20px;
+  z-index: 1;
 }
 
 img.cardimg {
@@ -145,6 +146,19 @@ img.cardimg {
   border-radius: 5px;
 }
 
+img.cardimg:hover {
+  cursor: pointer;
+}
+
 .stack-cards {
   width: 55px;
+}
+
+
+
+/* Scores */
+
+p.scores{
+  display: flex;
+  justify-content: center;
 }
