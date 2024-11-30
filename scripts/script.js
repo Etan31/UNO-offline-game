@@ -129,33 +129,54 @@ renderDeck(remainingDeck);
 const renderPlayerCards = (player1, player2) => {
     const player1Container = document.querySelector('#yourcards');
     const player2Container = document.querySelector('#opponentcards');
+    const deckElement = document.querySelector('.stack-cards'); // Select deck element here
 
     // Clear existing cards
     player1Container.innerHTML = '';
     player2Container.innerHTML = '';
 
-    // Render Player 1 cards
-    player1.forEach((card) => {
+    // Render Player 1 cards with animation
+    player1.forEach((card, index) => {
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
         cardElement.alt = `${card.type.toUpperCase()} ${card.color.toUpperCase()}`;
+
+        // Set initial position (deck location)
+        const deckRect = deckElement.getBoundingClientRect();
+        // cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        // cardElement.style.top = `${deckRect.top}px`;
+
         player1Container.appendChild(cardElement);
+
+        // Animate card after a delay
+        setTimeout(() => {
+            cardElement.classList.add('animate');
+        }, index * 300); // Delay for each card, adjusting the animation timing
     });
 
-    // Render Player 2 cards
-    player2.forEach((card) => {
+    // Render Player 2 cards with animation
+    player2.forEach((card, index) => {
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
         cardElement.alt = `${card.type.toUpperCase()} ${card.color.toUpperCase()}`;
+
+        // Set initial position (deck location)
+        const deckRect = deckElement.getBoundingClientRect();
+        // cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        // cardElement.style.top = `${deckRect.top}px`;
+
         player2Container.appendChild(cardElement);
+
+        // Animate card after a delay
+        setTimeout(() => {
+            cardElement.classList.add('animate');
+        }, (index + 7) * 300); // Delay for each card of player 2
     });
 };
 
-
-
-
+// onclick of remaining
 const handleDeckClick = () => {
     const { deck: updatedDeck, player1, player2 } = dealInitialCards(remainingDeck);
 
@@ -169,8 +190,6 @@ const handleDeckClick = () => {
     // Disable further clicks on the deck after the initial deal
     document.querySelector('.stack-cards').removeEventListener('click', handleDeckClick);
 };
-
-
 document.querySelector('.stack-cards').addEventListener('click', handleDeckClick);
 
 const dealInitialCards = (deck) => {
