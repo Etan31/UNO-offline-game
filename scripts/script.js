@@ -54,14 +54,31 @@ const { deck: remainingDeck, initialUsedCard } = setupInitialUsedCard(shuffledDe
 
 // Helper function to get the image path of a card
 const getCardImagePath = (card) => {
-    console.log("card color:" , card.color);
-    if (card.color === 'wild') {
-        // Special case for wild cards
-        return `./assets/imgs/cards/special/${card.type}.png`;
-    } else {
-        return `./assets/imgs/cards/${card.color}/${card.type}${card.color[0]}.png`;
+    console.log("Card color:", card.color, "Card type:", card.type);
+
+    // Handle wild cards (changecolor and plus4)
+    const wildcards = {
+        changeColor: './assets/imgs/cards/special/changecolor.png',
+        plus4: './assets/imgs/cards/special/plus4.png'
+    };
+    
+    // Check for wildcards first
+    if (wildcards[card.type]) {
+        return wildcards[card.type];
     }
+
+    // Handle special cards for specific colors (block, reverse, plus2)
+    const specialCards = ['block', 'reverse', 'plus2'];
+    if (specialCards.includes(card.type)) {
+        return `./assets/imgs/cards/${card.color}/${card.type}${card.color}.png`; // e.g., blockred, reverseblue
+    }
+
+    // Handle normal numbered cards
+    return `./assets/imgs/cards/${card.color}/${card.type}${card.color[0]}.png`;
 };
+
+
+
 
 // Render the initial deck and used card
 const renderDeckAndUsedCard = (usedCard) => {
@@ -153,7 +170,8 @@ const handleDeckClick = () => {
 document.querySelector('.stack-cards').addEventListener('click', handleDeckClick);
 
 const dealInitialCards = (deck) => {
-    if (deck.length < 14) {
+
+    if (deck.length < 14) { // TODO: this should call the function that reshuffle the used cards and put it back to unused deck of card.  
         throw new Error('Not enough cards to deal 7 to each player!');
     }
 
@@ -165,7 +183,7 @@ const dealInitialCards = (deck) => {
 
     // Return the updated deck and player cards
     return {
-        deck, // Remaining cards in the deck
+        deck,
         player1,
         player2
     };
