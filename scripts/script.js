@@ -1,5 +1,7 @@
 const cardColors = ['red', 'blue', 'green', 'yellow'];
-const cardTypes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'reverse', 'plus2', 'plus4', 'block', 'changeColor'];
+const cardTypes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'reverse', 'plus2', 'block'];
+const wildcards = ['changeColor', 'plus4'];
+const WILDCARD_COUNT = 4;
 
 const createDeck = () => {
     const deck = [];
@@ -18,10 +20,12 @@ const createDeck = () => {
     }
 
     // Add wildcards (changeColor & plus4)
-    for (let i = 0; i < 4; i++) {
-        deck.push({ color: 'wild', type: 'changeColor' });
-        deck.push({ color: 'wild', type: 'plus4' });
+    for (let wildcard of wildcards) {
+        for (let i = 0; i < WILDCARD_COUNT; i++) {
+            deck.push({ color: 'wild', type: wildcard });
+        }   
     }
+
     return deck;
 };
 
@@ -54,7 +58,7 @@ const { deck: remainingDeck, initialUsedCard } = setupInitialUsedCard(shuffledDe
 
 // Helper function to get the image path of a card
 const getCardImagePath = (card) => {
-    console.log("Card color:", card.color, "Card type:", card.type);
+    console.log("color:", card.color, " : ", "type:", card.type);
 
     // Handle wild cards (changecolor and plus4)
     const wildcards = {
