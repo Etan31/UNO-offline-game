@@ -85,9 +85,13 @@ const getCardImagePath = (card) => {
 
 
 // Render the initial deck and used card
+// Render the initial deck and used card
 const renderDeckAndUsedCard = (usedCard) => {
     const usedCardsContainer = document.querySelector('.used-cards');
     const stackCardsContainer = document.querySelector('.stack-cards');
+
+    // Log the recently used card
+    console.log("Recently used card:", "color: ",usedCard.color, "type: ", usedCard.type );
 
     // Display the used card with its image
     usedCardsContainer.innerHTML = `
@@ -103,6 +107,7 @@ const renderDeckAndUsedCard = (usedCard) => {
         <img class="cardimg" src="./assets/imgs/back-cover/back-cover.png" alt="Deck Stack" />
     `;
 };
+
 
 // Render the remaining deck (not used cards, random)
 const renderDeck = (deck) => {
@@ -135,6 +140,13 @@ const renderPlayerCards = (player1, player2) => {
     player1Container.innerHTML = '';
     player2Container.innerHTML = '';
 
+    const attachClickListener = (cardElement, card) => {
+        cardElement.addEventListener('click', () => {
+            console.log("Clicked card:", card);
+        });
+    };
+
+
     // Render Player 1 cards with animation
     player1.forEach((card, index) => {
         const cardElement = document.createElement('img');
@@ -148,6 +160,9 @@ const renderPlayerCards = (player1, player2) => {
         cardElement.style.top = `${deckRect.top}px`;
 
         player1Container.appendChild(cardElement);
+
+        // Attach click event listener
+        attachClickListener(cardElement, card);
 
         // Animate card after a delay
         setTimeout(() => {
