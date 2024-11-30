@@ -144,8 +144,8 @@ const renderPlayerCards = (player1, player2) => {
 
         // Set initial position (deck location)
         const deckRect = deckElement.getBoundingClientRect();
-        // cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
-        // cardElement.style.top = `${deckRect.top}px`;
+        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.top = `${deckRect.top}px`;
 
         player1Container.appendChild(cardElement);
 
@@ -164,8 +164,8 @@ const renderPlayerCards = (player1, player2) => {
 
         // Set initial position (deck location)
         const deckRect = deckElement.getBoundingClientRect();
-        // cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
-        // cardElement.style.top = `${deckRect.top}px`;
+        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.top = `${deckRect.top}px`;
 
         player2Container.appendChild(cardElement);
 

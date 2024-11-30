@@ -104,6 +104,8 @@ main {
   padding-inline: 20px
 }
 
+/* 
+
 .mycards > .card-container > .cardimg {
   position: absolute;
   top: -18vh;
@@ -123,9 +125,10 @@ main {
 
 
 .mycards > .card-container > .cardimg.animate {
-  transform: translate(0%, 225%) !important; /* Change based on where the cards need to go */
-  opacity: 1; /* Ensure the card is fully visible when animated */
-}
+  transform: translate(0%, 225%) !important;
+  opacity: 1;
+  /* position: relative; */
+} */
 
 .opponentcards > .card-container > .cardimg.animate {
   transform: translate(0%, -261%) !important; /* Change based on where the cards need to go */
