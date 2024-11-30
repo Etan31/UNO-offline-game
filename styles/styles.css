@@ -104,9 +104,9 @@ main {
   padding-inline: 20px
 }
 
-/* 
 
-.mycards > .card-container > .cardimg {
+
+/* .mycards > .card-container > .cardimg {
   position: absolute;
   top: -18vh;
   left: 53%;
@@ -121,19 +121,18 @@ main {
   left: 53%;
   transform: translateY(50%);
   transition: transform 0.5s ease, opacity 0.5s ease;        
-}
-
-
-.mycards > .card-container > .cardimg.animate {
-  transform: translate(0%, 225%) !important;
-  opacity: 1;
-  /* position: relative; */
 } */
 
-.opponentcards > .card-container > .cardimg.animate {
-  transform: translate(0%, -261%) !important; /* Change based on where the cards need to go */
+
+/* .mycards > .card-container > .cardimg.animate {
+  transform: translate(0%, 225%) !important;
   opacity: 1;
-}
+} 
+
+.opponentcards > .card-container > .cardimg.animate {
+  transform: translate(0%, -261%) !important;
+  opacity: 1;
+} */
 
 .opponentcards {
   position: fixed;
