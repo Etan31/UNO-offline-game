@@ -158,7 +158,7 @@ const renderPlayerCards = (player1, player2) => {
 
     const attachClickListener = (cardElement, card) => {
         cardElement.addEventListener('click', () => {
-            console.log("Clicked card:", card);
+            
         });
     };
 
@@ -212,8 +212,6 @@ const renderPlayerCards = (player1, player2) => {
 };
 
 
-console.log("player1DeckofCards", player1DeckofCards);
-console.log("player2DeckofCards", player2DeckofCards);
 
 // onclick of remaining
 const handleDeckClick = () => {
