@@ -42,18 +42,21 @@ const renderDeckAndUsedCard = (usedCard) => {
     const usedCardsContainer = document.querySelector('.used-cards');
     const stackCardsContainer = document.querySelector('.stack-cards');
 
-    usedCards = usedCard; //This will add the usedCard to the global variable usedCards
+    // Make sure usedCards is an array, add the usedCard
+    if (!Array.isArray(usedCards)) {
+        usedCards = [];  // Reset if not an array
+    }
+    usedCards.push(usedCard);
 
     console.log("Recently used card:", "color: ", usedCard.color, "type: ", usedCard.type);
 
-    // Display the used card with its image
-    usedCardsContainer.innerHTML = `
-        <img 
-            class="cardimg" 
-            src="${getCardImagePath(usedCard)}" 
-            alt="${usedCard.type.toUpperCase()} ${usedCard.color.toUpperCase()}" 
-        />
-    `;
+    // Append the used card with its image
+    const cardImgElement = document.createElement('img');
+    cardImgElement.classList.add('cardimg');
+    cardImgElement.src = getCardImagePath(usedCard);
+    cardImgElement.alt = `${usedCard.type.toUpperCase()} ${usedCard.color.toUpperCase()}`;
+
+    usedCardsContainer.appendChild(cardImgElement);
 
     // Display the deck stack (placeholder for now)
     stackCardsContainer.innerHTML = `
@@ -147,6 +150,35 @@ renderDeck(remainingDeck);
 
 
 //This will get 7 initial cards at the start of the game.
+// Function to attach click listener and update used cards
+const attachClickListener = (cardElement, card, playerDeck) => {
+    cardElement.addEventListener('click', () => {
+        if (playerDeck.length > 0) {
+            
+            let clickedCard = playerDeck.pop(); 
+
+            // Ensure usedCards is an array before pushing
+            if (!Array.isArray(usedCards)) {
+                console.error('usedCards is not an array, resetting it to an empty array.');
+                usedCards = []; 
+            }
+
+            usedCards.push(clickedCard);  // Add the clicked card to the usedCards array
+
+            // Update the displayed used card immediately after adding the clicked card
+            renderDeckAndUsedCard(clickedCard);  // This will update the visual representation of the used card
+
+            // Remove the card visually
+            cardElement.remove();
+        } else {
+            console.warn('No more cards in the deck.');
+        }
+    });
+};
+
+
+
+// Render Player 1 cards
 const renderPlayerCards = (player1, player2) => {
     const player1Container = document.querySelector('#yourcards');
     const player2Container = document.querySelector('#opponentcards');
@@ -156,16 +188,10 @@ const renderPlayerCards = (player1, player2) => {
     player1Container.innerHTML = '';
     player2Container.innerHTML = '';
 
-    const attachClickListener = (cardElement, card) => {
-        cardElement.addEventListener('click', () => {
-            
-        });
-    };
-
-
     // Render Player 1 cards with animation
     player1.forEach((card, index) => {
-        player1DeckofCards.push(card);
+        player1DeckofCards.push(card);  // Add the card to player1's deck
+
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
@@ -178,10 +204,10 @@ const renderPlayerCards = (player1, player2) => {
 
         player1Container.appendChild(cardElement);
 
-        // Attach click event listener
-        attachClickListener(cardElement, card);
+        // Attach the click event listener
+        attachClickListener(cardElement, card, player1DeckofCards);
 
-        // Animate card after a delay. This will only add a classlist to each card to be able to animate each.
+        // Animate card after a delay (optional)
         // setTimeout(() => {
         //     cardElement.classList.add('animate');
         // }, index * 300); 
@@ -189,7 +215,7 @@ const renderPlayerCards = (player1, player2) => {
 
     // Render Player 2 cards with animation
     player2.forEach((card, index) => {
-        player2DeckofCards.push(card); 
+        player2DeckofCards.push(card);  // Add the card to player2's deck
 
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
@@ -203,13 +229,13 @@ const renderPlayerCards = (player1, player2) => {
 
         player2Container.appendChild(cardElement);
 
-        // Animate card after a delay
+        // Animate card after a delay (optional)
         // setTimeout(() => {
         //     cardElement.classList.add('animate');
         // }, (index + 7) * 300); // Delay for each card of player 2
     });
-
 };
+
 
 
 
