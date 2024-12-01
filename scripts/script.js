@@ -3,95 +3,48 @@ const cardTypes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'reverse', 
 const wildcards = ['changeColor', 'plus4'];
 const WILDCARD_COUNT = 4;
 
-const createDeck = () => {
-    const deck = [];
+let usedCards = [];
+let unusedCards = [];
+let playerTurn = 1;
+let playerScores = [0, 0];
+let player1DeckofCards = [];
+let player2DeckofCards = [];
 
-    // Create deck of cards (not random yet)
-    for (let color of cardColors) {
-        for (let type of cardTypes) {
-            // Create two copies of each type except '0' (only one copy)
-            if (type === '0') {
-                deck.push({ color, type });
-            } else {
-                deck.push({ color, type });
-                deck.push({ color, type });
-            }
-        }
-    }
-
-    // Add wildcards (changeColor & plus4)
-    for (let wildcard of wildcards) {
-        for (let i = 0; i < WILDCARD_COUNT; i++) {
-            deck.push({ color: 'wild', type: wildcard });
-        }   
-    }
-
-    return deck;
-};
-
-const deck = createDeck();
-
-const shuffleDeck = (deck) => {
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck;
-};
-
-const shuffledDeck = shuffleDeck(deck);
-
-// Setup the starting card
-const setupInitialUsedCard = (deck) => {
-    let initialUsedCard;
-
-    do {
-        initialUsedCard = deck.pop(); // Continuously pick cards until one is not a wildcard
-    } while (
-        initialUsedCard.color === 'wild' || // Exclude wild cards
-        ['plus2', 'plus4', 'changeColor', 'reverse', 'block'].includes(initialUsedCard.type) // Exclude specific types
-    );
-    return { deck, initialUsedCard };
-};
-
-const { deck: remainingDeck, initialUsedCard } = setupInitialUsedCard(shuffledDeck);
+// console.log("player1DeckofCards", player1DeckofCards);
+// console.log("player2DeckofCards", player2DeckofCards);
+// console.log("unusedCards:", unusedCards);
+// console.log("usedCards:", usedCards);
 
 // Helper function to get the image path of a card
 const getCardImagePath = (card) => {
-    console.log("color:", card.color, " : ", "type:", card.type);
-
-    // Handle wild cards (changecolor and plus4)
     const wildcards = {
         changeColor: './assets/imgs/cards/special/changecolor.png',
         plus4: './assets/imgs/cards/special/plus4.png'
     };
     
-    // Check for wildcards first
+    // Check for wildcards
     if (wildcards[card.type]) {
         return wildcards[card.type];
     }
 
-    // Handle special cards for specific colors (block, reverse, plus2)
+    // Handle special cards (e.g., blockred, reverseblue)
     const specialCards = ['block', 'reverse', 'plus2'];
     if (specialCards.includes(card.type)) {
-        return `./assets/imgs/cards/${card.color}/${card.type}${card.color}.png`; // e.g., blockred, reverseblue
+        return `./assets/imgs/cards/${card.color}/${card.type}${card.color}.png`;
     }
 
     // Handle normal numbered cards
     return `./assets/imgs/cards/${card.color}/${card.type}${card.color[0]}.png`;
 };
 
-
-
-
-// Render the initial deck and used card
-// Render the initial deck and used card
+// Render the deck and used card
 const renderDeckAndUsedCard = (usedCard) => {
     const usedCardsContainer = document.querySelector('.used-cards');
     const stackCardsContainer = document.querySelector('.stack-cards');
 
-    // Log the recently used card
-    console.log("Recently used card:", "color: ",usedCard.color, "type: ", usedCard.type );
+    usedCards = usedCard; //This will add the usedCard to the global variable usedCards
+
+    console.log("Recently used card:", "color: ", usedCard.color, "type: ", usedCard.type);
 
     // Display the used card with its image
     usedCardsContainer.innerHTML = `
@@ -107,6 +60,69 @@ const renderDeckAndUsedCard = (usedCard) => {
         <img class="cardimg" src="./assets/imgs/back-cover/back-cover.png" alt="Deck Stack" />
     `;
 };
+
+// Function to create the deck
+const createDeck = () => {
+    const deck = [];
+
+    for (let color of cardColors) {
+        for (let type of cardTypes) {
+            // Create two copies of each type except '0'
+            if (type === '0') {
+                deck.push({ color, type });
+            } else {
+                deck.push({ color, type });
+                deck.push({ color, type });
+            }
+        }
+    }
+
+    // Add wildcards
+    for (let wildcard of wildcards) {
+        for (let i = 0; i < WILDCARD_COUNT; i++) {
+            deck.push({ color: 'wild', type: wildcard });
+        }
+    }
+
+    unusedCards.push(deck); //This the variable 'deck' will be added to the global variable 'unusedCard'. 
+
+    return deck;
+};
+
+// Function to shuffle the deck
+const shuffleDeck = (deck) => {
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    return deck;
+};
+
+// Function to set up the initial used card
+const setupInitialUsedCard = (deck) => {
+    let initialUsedCard;
+
+    do {
+        initialUsedCard = deck.pop();
+    } while (
+        initialUsedCard.color === 'wild' || // Exclude wildcards
+        ['plus2', 'plus4', 'changeColor', 'reverse', 'block'].includes(initialUsedCard.type) // Exclude special types
+    );
+
+    return { deck, initialUsedCard };
+};
+
+// Initialize and shuffle the deck
+const deck = createDeck();
+unusedCards = shuffleDeck(deck);
+
+// Set up the initial used card
+const { deck: remainingDeck, initialUsedCard } = setupInitialUsedCard(unusedCards);
+
+// Update global variables
+usedCards.push(initialUsedCard);
+unusedCards = remainingDeck;
+
 
 
 // Render the remaining deck (not used cards, random)
@@ -149,6 +165,7 @@ const renderPlayerCards = (player1, player2) => {
 
     // Render Player 1 cards with animation
     player1.forEach((card, index) => {
+        player1DeckofCards.push(card);
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
@@ -164,14 +181,16 @@ const renderPlayerCards = (player1, player2) => {
         // Attach click event listener
         attachClickListener(cardElement, card);
 
-        // Animate card after a delay
-        setTimeout(() => {
-            cardElement.classList.add('animate');
-        }, index * 300); // Delay for each card, adjusting the animation timing
+        // Animate card after a delay. This will only add a classlist to each card to be able to animate each.
+        // setTimeout(() => {
+        //     cardElement.classList.add('animate');
+        // }, index * 300); 
     });
 
     // Render Player 2 cards with animation
     player2.forEach((card, index) => {
+        player2DeckofCards.push(card); 
+
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
@@ -185,11 +204,16 @@ const renderPlayerCards = (player1, player2) => {
         player2Container.appendChild(cardElement);
 
         // Animate card after a delay
-        setTimeout(() => {
-            cardElement.classList.add('animate');
-        }, (index + 7) * 300); // Delay for each card of player 2
+        // setTimeout(() => {
+        //     cardElement.classList.add('animate');
+        // }, (index + 7) * 300); // Delay for each card of player 2
     });
+
 };
+
+
+console.log("player1DeckofCards", player1DeckofCards);
+console.log("player2DeckofCards", player2DeckofCards);
 
 // onclick of remaining
 const handleDeckClick = () => {
