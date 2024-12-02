@@ -364,22 +364,7 @@ function playerTurnListener(playerTurn1) {
             isValid = true; // All cards are valid if no last card exists
         }
 
-        // Update card state
-        cardElement.disabled = !isValid;
-
-        // Add shake effect if card is invalid
-        if (!isValid) {
-            cardElement.addEventListener('click', () => {
-                if (cardElement.disabled) {
-                    cardElement.classList.add('shake');
-                    setTimeout(() => cardElement.classList.remove('shake'), 500); // Remove shake after animation
-                }
-            });
-        } else {
-            cardElement.classList.remove('shake'); // Ensure shake effect is removed for valid cards
-        }
     });
 }
-
 playerTurnListener(playerTurn1);
 
