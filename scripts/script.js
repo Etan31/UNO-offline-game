@@ -5,7 +5,7 @@ const WILDCARD_COUNT = 4;
 
 let usedCards = [];
 let unusedCards = [];
-let playerTurn1 = false;
+let playerTurn1 = true;
 let playerScores = [0, 0];
 let player1DeckofCards = [];
 let player2DeckofCards = [];
@@ -148,6 +148,7 @@ renderDeck(remainingDeck);
 // Function to attach click listener and update used cards
 const attachClickListener = (cardElement, card, playerDeck) => {
     cardElement.addEventListener('click', () => {
+
         if (playerDeck.length > 0) {
             
             let clickedCard = card; 
@@ -157,19 +158,22 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 console.error('usedCards is not an array, resetting it to an empty array.');
                 usedCards = []; 
             }
-           
 
-            // Get the last used card info (if any)
+            //last card info
             let lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
 
             if (lastCard) {
                 let [lastCardColor, lastCardType] = lastCard;
                 const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
 
+                // Log the clicked card for debugging
+                console.log("Clicked card: ", clickedCard);
+
                 // Rule: Plus4 can always be dropped
                 if (clickedCard.type === 'plus4') {
-                    console.log('Plus4 card can always be played.');
                     usedCards.push(clickedCard);
+                    playerTurn1 = false;
+                    playerTurnListener(playerTurn1)
                 }
                 // Rule: Match by color or type
                 else if (
@@ -178,19 +182,21 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     (specialCardTypes.includes(clickedCard.type) &&      // Special card matches color
                         clickedCard.color === lastCardColor)
                 ) {
-                    console.log('Card matches! Adding to used cards.');
                     usedCards.push(clickedCard);
+                    playerTurn1 = false;
+                    playerTurnListener(playerTurn1)
                 }
                 // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
                 else if (
                     (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
                     (clickedCard.type === 'plus4' || clickedCard.type === 'plus2') // Only Plus2 or Plus4 allowed
                 ) {
-                    console.log('Special rule: Plus2 or Plus4 match.');
                     usedCards.push(clickedCard);
+                    playerTurn1 = false;
+                    playerTurnListener(playerTurn1)
                 } else {
                     console.warn('Card does not match by color or type.');
-                    return; // Prevent further actions if the condition fails
+                    return; 
                 }
             } else {
                 console.log('No last card. Adding the first card.');
@@ -285,10 +291,6 @@ const handleDeckClick = () => {
 
     // Disable further clicks on the deck after the initial deal
     document.querySelector('.stack-cards').removeEventListener('click', handleDeckClick);
-
-    // to change turns.
-    playerTurn1 = true;
-    console.log("playerTurn1: ", playerTurn1);
 };
 document.querySelector('.stack-cards').addEventListener('click', handleDeckClick);
 
@@ -321,3 +323,15 @@ function lastUsedCard(usedCards) {
 
     return [cardColor, cardType];
 }
+
+console.log("playerTurn1:", playerTurn1);
+
+function playerTurnListener(playerTurn1) {
+    
+    if(playerTurn1) {
+
+    } else {
+        
+    }
+}
+
