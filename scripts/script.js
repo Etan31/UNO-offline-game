@@ -148,9 +148,7 @@ renderDeck(remainingDeck);
 // Function to attach click listener and update used cards
 const attachClickListener = (cardElement, card, playerDeck) => {
     cardElement.addEventListener('click', () => {
-
         if (playerDeck.length > 0) {
-            
             let clickedCard = card; 
 
             // Ensure usedCards is an array before pushing
@@ -159,21 +157,19 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 usedCards = []; 
             }
 
-            //last card info
+            // Get last card information
             let lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
 
             if (lastCard) {
                 let [lastCardColor, lastCardType] = lastCard;
                 const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
 
-                // Log the clicked card for debugging
-                console.log("Clicked card: ", clickedCard);
-
                 // Rule: Plus4 can always be dropped
                 if (clickedCard.type === 'plus4') {
+                    console.log('Plus4 card can always be played.');
                     usedCards.push(clickedCard);
                     playerTurn1 = false;
-                    playerTurnListener(playerTurn1)
+                    playerTurnListener(playerTurn1);
                 }
                 // Rule: Match by color or type
                 else if (
@@ -182,21 +178,26 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     (specialCardTypes.includes(clickedCard.type) &&      // Special card matches color
                         clickedCard.color === lastCardColor)
                 ) {
+                    console.log('Card matches! Adding to used cards.');
                     usedCards.push(clickedCard);
                     playerTurn1 = false;
-                    playerTurnListener(playerTurn1)
+                    playerTurnListener(playerTurn1);
                 }
                 // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
                 else if (
                     (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
                     (clickedCard.type === 'plus4' || clickedCard.type === 'plus2') // Only Plus2 or Plus4 allowed
                 ) {
+                    console.log('Special rule: Plus2 or Plus4 match.');
                     usedCards.push(clickedCard);
                     playerTurn1 = false;
-                    playerTurnListener(playerTurn1)
+                    playerTurnListener(playerTurn1);
                 } else {
+                    // Handle invalid card play
                     console.warn('Card does not match by color or type.');
-                    return; 
+                    cardElement.classList.add('shake');
+                    setTimeout(() => cardElement.classList.remove('shake'), 500); // Remove shake after animation
+                    return; // Prevent further actions
                 }
             } else {
                 console.log('No last card. Adding the first card.');
@@ -213,6 +214,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
         }
     });
 };
+
 
 
 
@@ -324,14 +326,60 @@ function lastUsedCard(usedCards) {
     return [cardColor, cardType];
 }
 
-console.log("playerTurn1:", playerTurn1);
-
+// when changing their move to drop cards.
 function playerTurnListener(playerTurn1) {
-    
-    if(playerTurn1) {
+    const player1Element = document.getElementById('player1');
+    const player2Element = document.getElementById('player2');
 
+    // Update opacity to indicate the active player
+    if (playerTurn1) {
+        player1Element.style.opacity = '1';
+        player2Element.style.opacity = '0.45';
     } else {
-        
+        player1Element.style.opacity = '0.45';
+        player2Element.style.opacity = '1';
     }
+
+    // Enable valid cards and disable invalid ones
+    const cardElements = document.querySelectorAll('.cardImg'); // Cards have the class "cardImg"
+    const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
+
+    cardElements.forEach((cardElement) => {
+        const cardData = JSON.parse(cardElement.dataset.card); // Assuming card data is in a `data-card` attribute
+        let isValid = false; // Default to invalid
+
+        if (lastCard) {
+            const [lastCardColor, lastCardType] = lastCard;
+            const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
+
+            // Determine validity based on game rules
+            isValid =
+                cardData.type === 'plus4' || // Plus4 can always be played
+                cardData.color === lastCardColor || // Matches color
+                cardData.type === lastCardType || // Matches type
+                (specialCardTypes.includes(cardData.type) && cardData.color === lastCardColor) || // Special card matches color
+                ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
+                 (cardData.type === 'plus4' || cardData.type === 'plus2'));
+        } else {
+            isValid = true; // All cards are valid if no last card exists
+        }
+
+        // Update card state
+        cardElement.disabled = !isValid;
+
+        // Add shake effect if card is invalid
+        if (!isValid) {
+            cardElement.addEventListener('click', () => {
+                if (cardElement.disabled) {
+                    cardElement.classList.add('shake');
+                    setTimeout(() => cardElement.classList.remove('shake'), 500); // Remove shake after animation
+                }
+            });
+        } else {
+            cardElement.classList.remove('shake'); // Ensure shake effect is removed for valid cards
+        }
+    });
 }
+
+playerTurnListener(playerTurn1);
 
