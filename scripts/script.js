@@ -155,7 +155,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
     cardElement.addEventListener('click', () => {
         if (playerDeck.length > 0) {
             
-            let clickedCard = playerDeck.pop(); 
+            let clickedCard = card; 
 
             // Ensure usedCards is an array before pushing
             if (!Array.isArray(usedCards)) {
@@ -166,7 +166,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
             usedCards.push(clickedCard);  // Add the clicked card to the usedCards array
 
             // Update the displayed used card immediately after adding the clicked card
-            renderDeckAndUsedCard(clickedCard);  // This will update the visual representation of the used card
+            renderDeckAndUsedCard(clickedCard);  
 
             // Remove the card visually
             cardElement.remove();
