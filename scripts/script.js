@@ -247,10 +247,6 @@ const renderPlayerCards = (player1, player2) => {
         // Attach the click event listener
         attachClickListener(cardElement, card, player1DeckofCards);
 
-        // Animate card after a delay (optional)
-        // setTimeout(() => {
-        //     cardElement.classList.add('animate');
-        // }, index * 300); 
     });
 
     // Render Player 2 cards with animation
@@ -269,16 +265,9 @@ const renderPlayerCards = (player1, player2) => {
 
         player2Container.appendChild(cardElement);
 
-        // Animate card after a delay (optional)
-        // setTimeout(() => {
-        //     cardElement.classList.add('animate');
-        // }, (index + 7) * 300); // Delay for each card of player 2
     });
     console.log(player1DeckofCards)
 };
-
-
-
 
 // onclick of remaining
 const handleDeckClick = () => {
