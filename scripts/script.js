@@ -75,14 +75,13 @@ const createDeck = () => {
         }
     }
 
-    // Add wildcards
     for (let wildcard of wildcards) {
         for (let i = 0; i < WILDCARD_COUNT; i++) {
             deck.push({ color: 'wild', type: wildcard });
         }
     }
 
-    unusedCards.push(deck); //This the variable 'deck' will be added to the global variable 'unusedCard'. 
+    unusedCards.push(deck); //The variable 'deck' will be added to the global variable 'unusedCard'. 
 
     return deck;
 };
