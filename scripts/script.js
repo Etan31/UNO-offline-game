@@ -10,11 +10,6 @@ let playerScores = [0, 0];
 let player1DeckofCards = [];
 let player2DeckofCards = [];
 
-// console.log("player1DeckofCards", player1DeckofCards);
-// console.log("player2DeckofCards", player2DeckofCards);
-// console.log("unusedCards:", unusedCards);
-// console.log("usedCards:", usedCards);
-
 // Helper function to get the image path of a card
 const getCardImagePath = (card) => {
     const wildcards = {
@@ -48,7 +43,7 @@ const renderDeckAndUsedCard = (usedCard) => {
     }
     usedCards.push(usedCard);
 
-    console.log("Recently used card:", "color: ", usedCard.color, "type: ", usedCard.type);
+    // console.log("Recently used card:", "color: ", usedCard.color, "type: ", usedCard.type);
 
     // Append the used card with its image
     const cardImgElement = document.createElement('img');
@@ -162,8 +157,45 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 console.error('usedCards is not an array, resetting it to an empty array.');
                 usedCards = []; 
             }
+           
 
-            usedCards.push(clickedCard);  // Add the clicked card to the usedCards array
+            // Get the last used card info (if any)
+            let lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
+
+            if (lastCard) {
+                let [lastCardColor, lastCardType] = lastCard;
+                const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
+
+                // Rule: Plus4 can always be dropped
+                if (clickedCard.type === 'plus4') {
+                    console.log('Plus4 card can always be played.');
+                    usedCards.push(clickedCard);
+                }
+                // Rule: Match by color or type
+                else if (
+                    clickedCard.color === lastCardColor ||                // Match by color
+                    clickedCard.type === lastCardType ||                 // Match by type
+                    (specialCardTypes.includes(clickedCard.type) &&      // Special card matches color
+                        clickedCard.color === lastCardColor)
+                ) {
+                    console.log('Card matches! Adding to used cards.');
+                    usedCards.push(clickedCard);
+                }
+                // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
+                else if (
+                    (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
+                    (clickedCard.type === 'plus4' || clickedCard.type === 'plus2') // Only Plus2 or Plus4 allowed
+                ) {
+                    console.log('Special rule: Plus2 or Plus4 match.');
+                    usedCards.push(clickedCard);
+                } else {
+                    console.warn('Card does not match by color or type.');
+                    return; // Prevent further actions if the condition fails
+                }
+            } else {
+                console.log('No last card. Adding the first card.');
+                usedCards.push(clickedCard);
+            }
 
             // Update the displayed used card immediately after adding the clicked card
             renderDeckAndUsedCard(clickedCard);  
@@ -178,7 +210,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
 
 
 
-// Render Player 1 cards
+// This will distribute and display the random deck of card to the players. 
 const renderPlayerCards = (player1, player2) => {
     const player1Container = document.querySelector('#yourcards');
     const player2Container = document.querySelector('#opponentcards');
@@ -234,6 +266,7 @@ const renderPlayerCards = (player1, player2) => {
         //     cardElement.classList.add('animate');
         // }, (index + 7) * 300); // Delay for each card of player 2
     });
+    console.log(player1DeckofCards)
 };
 
 
@@ -278,3 +311,13 @@ const dealInitialCards = (deck) => {
         player2
     };
 };
+
+// This will return the last card from the deck of used cards.
+function lastUsedCard(usedCards) {
+    // console.log("last-usedCards: ", );
+    let lastcardInfo = usedCards[usedCards.length - 2];
+    let cardColor = lastcardInfo.color;
+    let cardType = lastcardInfo.type;
+
+    return [cardColor, cardType];
+}
