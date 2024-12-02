@@ -5,7 +5,7 @@ const WILDCARD_COUNT = 4;
 
 let usedCards = [];
 let unusedCards = [];
-let playerTurn = 1;
+let playerTurn1 = false;
 let playerScores = [0, 0];
 let player1DeckofCards = [];
 let player2DeckofCards = [];
@@ -252,6 +252,10 @@ const handleDeckClick = () => {
 
     // Disable further clicks on the deck after the initial deal
     document.querySelector('.stack-cards').removeEventListener('click', handleDeckClick);
+
+    // to change turns.
+    playerTurn1 = true;
+    console.log("playerTurn1: ", playerTurn1);
 };
 document.querySelector('.stack-cards').addEventListener('click', handleDeckClick);
 
