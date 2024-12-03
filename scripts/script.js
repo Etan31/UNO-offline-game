@@ -10,7 +10,7 @@ let playerScores = [0, 0];
 let player1DeckofCards = [];
 let player2DeckofCards = [];
 
-// Helper function to get the image path of a card
+// To the image path of a card
 const getCardImagePath = (card) => {
     const wildcards = {
         changeColor: './assets/imgs/cards/special/changecolor.png',
