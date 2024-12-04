@@ -170,6 +170,12 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                 }
+
+                //Rule: change color selected by player
+                else if (clickedCard.type === 'changeColor'){
+                    console.log("clicked Change color")
+                }
+
                 // Rule: Match by color or type
                 else if (
                     clickedCard.color === lastCardColor ||                // Match by color
@@ -182,6 +188,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                 }
+                
                 // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
                 else if (
                     (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
