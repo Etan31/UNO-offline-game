@@ -104,36 +104,6 @@ main {
   padding-inline: 20px
 }
 
-
-
-/* .mycards > .card-container > .cardimg {
-  position: absolute;
-  top: -18vh;
-  left: 53%;
-  transform: translateY(-50px);
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-
-.opponentcards > .card-container > .cardimg  {
-  position: absolute;
-  top: 20vh;
-  left: 53%;
-  transform: translateY(50%);
-  transition: transform 0.5s ease, opacity 0.5s ease;        
-} */
-
-
-/* .mycards > .card-container > .cardimg.animate {
-  transform: translate(0%, 225%) !important;
-  opacity: 1;
-} 
-
-.opponentcards > .card-container > .cardimg.animate {
-  transform: translate(0%, -261%) !important;
-  opacity: 1;
-} */
-
 .opponentcards {
   position: fixed;
   top: 120px;
@@ -145,7 +115,7 @@ main {
 
 .mycards {
   position: fixed;
-  bottom: 120px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -188,6 +158,8 @@ img.cardimg:hover {
 
 /* The overlay layer to block background interaction */
 .changeColor-overlay {
+  display: none;
+  /* display: block; */
   position: fixed;
   top: 0;
   left: 0;
@@ -199,7 +171,8 @@ img.cardimg:hover {
 
 /* The modal itself */
 .changeColor-modal {
-  display: flex;
+  display: none;
+  /* display: flex; */
   flex-direction: column;
   position: fixed;
   z-index: 3; /* Above the overlay */
