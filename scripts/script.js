@@ -315,7 +315,6 @@ const dealInitialCards = (deck) => {
 
 // This will return the last card from the deck of used cards.
 function lastUsedCard(usedCards) {
-    // console.log("last-usedCards: ", );
     let lastcardInfo = usedCards[usedCards.length - 2];
     let cardColor = lastcardInfo.color;
     let cardType = lastcardInfo.type;
