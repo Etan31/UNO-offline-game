@@ -3,13 +3,12 @@ const cardTypes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'reverse', 
 const wildcards = ['changeColor', 'plus4'];
 const WILDCARD_COUNT = 4;
 
-let usedCards = [];
-let unusedCards = [];
 let playerTurn1 = true;
-let playerScores = [0, 0];
-let player1DeckofCards = [];
-let player2DeckofCards = [];
+let usedCards = [], unusedCards = [];
+let player1Scores = 0, player2Scores = 0;
+let player1DeckofCards = [], player2DeckofCards = [];
 let recentCardColor = '';
+
 
 // To the image path of a card
 const getCardImagePath = (card) => {
