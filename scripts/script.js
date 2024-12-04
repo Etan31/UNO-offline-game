@@ -9,6 +9,7 @@ let playerTurn1 = true;
 let playerScores = [0, 0];
 let player1DeckofCards = [];
 let player2DeckofCards = [];
+let recentCardColor = '';
 
 // To the image path of a card
 const getCardImagePath = (card) => {
@@ -101,6 +102,8 @@ const setupInitialUsedCard = (deck) => {
 
     do {
         initialUsedCard = deck.pop();
+        recentCardColor = initialUsedCard.color;
+        console.log("recentCardColor-setup: ", recentCardColor)
     } while (
         initialUsedCard.color === 'wild' || // Exclude wildcards
         ['plus2', 'plus4', 'changeColor', 'reverse', 'block'].includes(initialUsedCard.type) // Exclude special types
@@ -173,7 +176,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
 
                 //Rule: change color selected by player
                 else if (clickedCard.type === 'changeColor'){
-                    console.log("clicked Change color")
+                    displayChangeColorModal();
                 }
 
                 // Rule: Match by color or type
@@ -188,7 +191,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                 }
-                
+
                 // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
                 else if (
                     (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
@@ -363,3 +366,37 @@ function playerTurnListener(playerTurn1) {
 }
 playerTurnListener(playerTurn1);
 
+
+// Pop-up modal to select color if 'changeColor' card has been drop
+function displayChangeColorModal() {
+    // Select modal and overlay elements
+    const overlay = document.querySelector('.changeColor-overlay');
+    const modal = document.querySelector('.changeColor-modal');
+
+    // Show modal and overlay
+    overlay.style.display = 'block';
+    modal.style.display = 'flex';
+
+
+    // Attach event listeners to color buttons
+    document.getElementById('red').addEventListener('click', () => selectColor('red'));
+    document.getElementById('green').addEventListener('click', () => selectColor('green'));
+    document.getElementById('blue').addEventListener('click', () => selectColor('blue'));
+    document.getElementById('yellow').addEventListener('click', () => selectColor('yellow'));
+}
+
+function closeChangeColorModal() {
+// Select modal and overlay elements
+    const overlay = document.querySelector('.changeColor-overlay');
+    const modal = document.querySelector('.changeColor-modal');
+
+    // Hide modal and overlay
+    overlay.style.display = 'none';
+    modal.style.display = 'none';
+}
+
+function selectColor(selectedColor) {
+    recentCardColor = selectedColor;  // Update recentCardColor with the selected color
+    console.log('Updated recentCardColor:', recentCardColor);
+    closeChangeColorModal();
+}
