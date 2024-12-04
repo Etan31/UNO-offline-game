@@ -181,10 +181,10 @@ const attachClickListener = (cardElement, card, playerDeck) => {
 
                 // Rule: Match by color or type
                 else if (
-                    clickedCard.color === lastCardColor ||                // Match by color
+                    clickedCard.color === recentCardColor ||                // Match by color
                     clickedCard.type === lastCardType ||                 // Match by type
                     (specialCardTypes.includes(clickedCard.type) &&      // Special card matches color
-                        clickedCard.color === lastCardColor)
+                        clickedCard.color === recentCardColor)
                 ) {
                     console.log('Card matches! Adding to used cards.');
                     usedCards.push(clickedCard);
@@ -353,9 +353,9 @@ function playerTurnListener(playerTurn1) {
             // Determine validity based on game rules
             isValid =
                 cardData.type === 'plus4' || // Plus4 can always be played
-                cardData.color === lastCardColor || // Matches color
+                cardData.color === recentCardColor || // Matches color
                 cardData.type === lastCardType || // Matches type
-                (specialCardTypes.includes(cardData.type) && cardData.color === lastCardColor) || // Special card matches color
+                (specialCardTypes.includes(cardData.type) && cardData.color === recentCardColor) || // Special card matches color
                 ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
                  (cardData.type === 'plus4' || cardData.type === 'plus2'));
         } else {
