@@ -186,6 +186,92 @@ img.cardimg:hover {
 }
 
 
+/* The overlay layer to block background interaction */
+.changeColor-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2; 
+}
+
+/* The modal itself */
+.changeColor-modal {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 3; /* Above the overlay */
+  width: clamp(390px, 50vw, 100vw);
+  height: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #642B73;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.changeColor-modal h1 {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  gap: clamp(20px, 5vw, 50px);
+}
+
+.btn-color {
+  width: clamp(50px, 5vw, 70px);
+  height: clamp(50px, 5vw, 70px);
+}
+
+.btn-color > p {
+  top: 0;
+  transform: unset;
+  position: absolute;
+  top: 230px;
+  margin-left: clamp(0px, 1vw, 16px) !important;
+}
+
+.btn-color button{
+  width: 100%; 
+  height: 100%;
+  border: none;
+  cursor: pointer;
+  border: 1px solid black;
+  position: relative;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.btn-color button:hover{
+  transform: scale(1.2);
+}
+
+button#red{
+  background-color: rgba(255, 0, 0, 0.80);
+}
+
+button#green{
+  background-color: rgba(0, 128, 0, 0.80);
+}
+
+button#blue{
+  background-color: rgba(0, 0, 255, 0.80);
+}
+
+button#yellow{
+  background-color: rgba(255, 255, 0, 0.80);
+}
 
 /* Scores */
 
