@@ -254,6 +254,14 @@ p.scores{
 }
 
 
+/* Game Info / Rules */
+
+.gameInfo-modal {
+  display: none;
+}
+
+
+
 /* Animations */
 
 img.cardimg.shake {
@@ -267,3 +275,4 @@ img.cardimg.shake {
   75% { transform: translateX(-5px); }
   100% { transform: translateX(0); }
 }
+
