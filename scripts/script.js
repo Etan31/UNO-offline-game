@@ -291,6 +291,7 @@ const handleDeckClick = () => {
     // Disable further clicks on the deck after the initial deal
     document.querySelector('.stack-cards').removeEventListener('click', handleDeckClick);
 };
+
 document.querySelector('.stack-cards').addEventListener('click', handleDeckClick);
 
 const dealInitialCards = (deck) => {
@@ -399,3 +400,37 @@ function selectColor(selectedColor) {
     console.log('Updated recentCardColor:', recentCardColor);
     closeChangeColorModal();
 }
+//start button
+
+
+const handleStart = ()=>{
+    handleDeckClick();
+    const unblurDeck = document.querySelectorAll('.deck-of-cards-blur');
+    if(unblurDeck){
+        unblurDeck.forEach(element => {
+            console.log("removing class from", element);
+            element.classList.remove('deck-of-cards-blur');});
+    }else{
+        console.log("no elements found")
+    }
+}
+//start button
+document.querySelector('.start-btn').addEventListener('click', ()=>{
+    handleDeckClick();
+    const unblurDeck = document.querySelector('.deck-of-cards-blur');
+    if(unblurDeck){
+        unblurDeck.classList.remove('deck-of-cards-blur');
+    }else{
+        console.log("class not found.")
+    }
+    const hideStart = document.querySelector('.start-container');
+    if(hideStart){
+        hideStart.classList.add('hide-start');
+    }else{
+        console.log("No start button");
+    }
+});
+
+
+
+
