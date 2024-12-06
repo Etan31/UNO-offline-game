@@ -152,6 +152,58 @@ img.cardimg {
   transition: transform 0.2s;
 }
 
+
+/*Start Button*/
+.start-container{
+  width: 100%;
+  height: 90%;
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.start-btn{
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  z-index: 2;
+  font-size: 36px;
+  color: white;
+  background-color: #17061c;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.start-btn:hover{
+  border: 2px solid white;
+}
+
+.button-txt{
+padding: 10px;
+}
+
+.hide-start{
+  display: none !important;
+}
+/*hide p2 cards*/
+.opponentcards::after{
+  content: "";
+  position: absolute;
+  background-image: url("../assets/imgs/back-cover/back-cover.png") !important;
+  top: 0;
+  left: 0;
+  z-index: 5;
+    width: 100%;
+  height: 100%;
+  background-size: 55px 84px;
+  background-repeat: repeat-x; /* Repeat horizontally */
+}
+
+.hide-p2-cards{
+  display: none;
+}
+
 img.cardimg:hover {
   cursor: pointer;
 }
@@ -312,22 +364,5 @@ padding: 10px;
 
 .hide-start{
   display: none !important;
-}
-/*hide p2 cards*/
-.opponentcards::after{
-  content: "";
-  position: absolute;
-  background-image: url("../assets/imgs/back-cover/back-cover.png") !important;
-  top: 0;
-  left: 0;
-  z-index: 5;
-    width: 100%;
-  height: 100%;
-  background-size: 55px 84px;
-  background-repeat: repeat-x; /* Repeat horizontally */
-}
-
-.hide-p2-cards{
-  display: none;
 }
 
