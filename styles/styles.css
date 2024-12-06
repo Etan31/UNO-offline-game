@@ -325,10 +325,8 @@ p.scores{
   z-index: 2; 
 }
 
-.gameInfo-modal {
-  display: none;
-}
 
+/* (Note done yet) */
 .gameInfo-modal {
   display: none;
   /* display: flex; */
