@@ -365,6 +365,7 @@ function playerTurnListener(playerTurn1) {
 playerTurnListener(playerTurn1);
 
 
+// Changed
 // Pop-up modal to select color if 'changeColor' card has been drop
 function displayChangeColorModal() {
     // Select modal and overlay elements
