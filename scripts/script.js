@@ -260,7 +260,6 @@ const renderPlayerCards = (player1, player2) => {
     // Render Player 2 cards with animation
     player2.forEach((card, index) => {
         player2DeckofCards.push(card);  // Add the card to player2's deck
-
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
@@ -401,6 +400,7 @@ function selectColor(selectedColor) {
     closeChangeColorModal();
 }
 
+//start button
 const handleStart = ()=>{
     handleDeckClick();
     const unblurDeck = document.querySelectorAll('.deck-of-cards-blur');
@@ -412,6 +412,8 @@ const handleStart = ()=>{
         console.log("no elements found")
     }
 }
+
+
 //start button
 document.querySelector('.start-btn').addEventListener('click', ()=>{
     handleDeckClick();
