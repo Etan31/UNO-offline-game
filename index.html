@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Uno Offile Game</h1>
-    <button class="info">i</button>
+    <button onclick="displayGameInfoModal()" class="info">i</button>
   </header>
   <main>
 
@@ -87,8 +87,14 @@
 
     <div class="gameInfo-overlay"></div>
     <div class="gameInfo-modal">
+
       <div class="left-toggle"></div>
       <div class="Info-container">
+        <div class="devs-container">
+          <h1>Developed By</h1>
+          <p class="dev-name">Tristan Ehron A. Tumbaga</p>
+          <p class="contributor-name"></p>
+        </div>
 
         <div class="rule1">
           <div class="rules-img"></div>
@@ -124,17 +130,12 @@
           </p>
         </div>
 
-        <div class="devs-container">
-          <h1>Developed By</h1>
-          <button class="close-btn"> X </button>
-          Tristan Ehron A. Tumbaga
-        </div>
       </div>
       <div class="right-toggle"></div>
 
       <!-- skip tutorial -->
       <div class="skip">
-        <button> >> </button>
+        <button onclick="hideGameInfoModal()"> >> </button>
       </div>
     </div>
 

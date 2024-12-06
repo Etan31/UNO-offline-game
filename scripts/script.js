@@ -434,3 +434,21 @@ document.querySelector('.start-btn').addEventListener('click', ()=>{
         console.log('no cards hidden');
     }
 });
+
+
+// Game Rules/Info modal
+function displayGameInfoModal() {
+    const modal = document.querySelector('.gameInfo-modal');
+    const overlay = document.querySelector('.gameInfo-overlay');
+
+    overlay.style.display = 'block'; 
+    modal.style.display = 'flex'; 
+}
+
+function hideGameInfoModal() {
+    const modal = document.querySelector('.gameInfo-modal');
+    const overlay = document.querySelector('.gameInfo-overlay');
+
+    overlay.style.display = 'none'; 
+    modal.style.display = 'none'; 
+}

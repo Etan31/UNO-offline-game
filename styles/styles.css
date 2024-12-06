@@ -313,14 +313,45 @@ p.scores{
 
 /* Game Info / Rules */
 
+.gameInfo-overlay {
+  display: none;
+  /* display: block; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2; 
+}
+
 .gameInfo-modal {
   display: none;
 }
 
+.gameInfo-modal {
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  position: fixed;
+  z-index: 3; /* Above the overlay */
+  width: clamp(390px, 50vw, 100vw);
+  height: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #642B73;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
 
 
 /* Animations */
-
 img.cardimg.shake {
   animation: shake 0.5s;
 }
@@ -332,6 +363,7 @@ img.cardimg.shake {
   75% { transform: translateX(-5px); }
   100% { transform: translateX(0); }
 }
+
 /*Start Button*/
 .start-container{
   width: 100%;
@@ -341,6 +373,7 @@ img.cardimg.shake {
   top: 0px;
   right: 0px;
 }
+
 .start-btn{
   position: absolute;
   top: 50%;
@@ -359,7 +392,7 @@ img.cardimg.shake {
 }
 
 .button-txt{
-padding: 10px;
+  padding: 10px;
 }
 
 .hide-start{
