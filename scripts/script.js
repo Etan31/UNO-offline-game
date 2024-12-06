@@ -365,6 +365,7 @@ function playerTurnListener(playerTurn1) {
 playerTurnListener(playerTurn1);
 
 
+// Changed
 // Pop-up modal to select color if 'changeColor' card has been drop
 function displayChangeColorModal() {
     // Select modal and overlay elements
@@ -398,9 +399,8 @@ function selectColor(selectedColor) {
     console.log('Updated recentCardColor:', recentCardColor);
     closeChangeColorModal();
 }
+
 //start button
-
-
 const handleStart = ()=>{
     handleDeckClick();
     const unblurDeck = document.querySelectorAll('.deck-of-cards-blur');
@@ -412,6 +412,8 @@ const handleStart = ()=>{
         console.log("no elements found")
     }
 }
+
+
 //start button
 document.querySelector('.start-btn').addEventListener('click', ()=>{
     handleDeckClick();
