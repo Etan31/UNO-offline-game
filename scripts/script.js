@@ -400,8 +400,6 @@ function selectColor(selectedColor) {
     console.log('Updated recentCardColor:', recentCardColor);
     closeChangeColorModal();
 }
-//start button
-
 
 const handleStart = ()=>{
     handleDeckClick();
@@ -429,8 +427,10 @@ document.querySelector('.start-btn').addEventListener('click', ()=>{
     }else{
         console.log("No start button");
     }
+    const unhideCards = document.querySelector('.hide-p2-cards');
+    if(unhideCards){
+        unhideCards.classList.remove('hide-p2-cards');
+    }else{
+        console.log('no cards hidden');
+    }
 });
-
-
-
-
