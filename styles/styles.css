@@ -397,3 +397,27 @@ button.start-btn:hover {
   color: white;
   font-weight: 700;
 }
+
+
+/* Contributors */
+ul.contributor-name {
+  text-decoration: none;
+  list-style: square;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+
+ul.contributor-name li {
+  width: fit-content;
+}
+
+ul.contributor-name li a {
+  text-decoration: none;
+  color: white;
+}
+
+li.dev-name::marker {
+  color: #007acc;
+}
