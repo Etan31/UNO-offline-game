@@ -74,6 +74,11 @@ h1 {
   font-size: clamp(15px, 5vw, 22px);
 }
 
+p, button {
+  font-family: 'Merienda', sans-serif;
+  font-weight: 100;
+}
+
 button.info {
   padding: 5px 15px;
   border-radius: 5px;
@@ -152,40 +157,10 @@ img.cardimg {
   transition: transform 0.2s;
 }
 
-
-/*Start Button*/
-.start-container{
-  width: 100%;
-  height: 90%;
-  display: block;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-}
-.start-btn{
-  position: absolute;
-  top: 50%;
-  left: 45%;
-  z-index: 2;
-  font-size: 36px;
-  color: white;
-  background-color: #17061c;
-  border: none;
-  border-radius: 10%;
-  cursor: pointer;
-}
-
-.start-btn:hover{
-  border: 2px solid white;
-}
-
-.button-txt{
-padding: 10px;
-}
-
 .hide-start{
   display: none !important;
 }
+
 /*hide p2 cards*/
 .opponentcards::after{
   content: "";
@@ -345,10 +320,6 @@ p.scores{
 }
 
 
-
-
-
-
 /* Animations */
 img.cardimg.shake {
   animation: shake 0.5s;
@@ -362,38 +333,67 @@ img.cardimg.shake {
   100% { transform: translateX(0); }
 }
 
-/*Start Button*/
-.start-container{
+
+
+/*Start Modal Display*/
+.start-container
+{
   width: 100%;
-  height: 90%;
+  height: 100vh;
   display: block;
   position: absolute;
   top: 0px;
   right: 0px;
 }
 
-.start-btn{
-  position: absolute;
-  top: 50%;
-  left: 45%;
-  z-index: 2;
-  font-size: 36px;
-  color: white;
-  background-color: #17061c;
-  border: none;
-  border-radius: 10%;
-  cursor: pointer;
-}
-
-.start-btn:hover{
-  border: 2px solid white;
-}
-
-.button-txt{
-  padding: 10px;
-}
-
 .hide-start{
   display: none !important;
 }
 
+.start-overlay {
+  /* display: none; */
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2; 
+}
+
+.modal-start-container {
+  display: flex;
+  position: absolute;
+  border: 1px solid #d042f3;
+  width: clamp(200px, 35vw, 806px);
+  padding: 20px 0;
+  height: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  background-color: #652b7373;
+  box-shadow: 0 0 15px 4px #642B73;
+  text-align: center;
+}
+
+button.start-btn{
+  padding: 5px clamp(20px, 5vw, 40px);
+  border: 1px solid #642B73;
+  background-color: #d042f3;
+  color: black;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+button.start-btn:hover {
+  transform: scale(1.1);
+  background-color: #652b7357;
+  border: 1px solid #d042f3;
+  color: white;
+  font-weight: 700;
+}

@@ -8,15 +8,26 @@
 </head>
 <body>
   <header>
-    <h1>Uno Offile Game</h1>
+    <h1>UNO-Solo</h1>
     <button onclick="displayGameInfoModal()" class="info">i</button>
   </header>
   <main>
 
     <div class="start-container">
-      
-      <button class="start-btn">
-        <p class="button-txt">Start</p></button>
+      <!-- <img src="" alt="">  --><!-- LOGO -->
+      <div class="start-overlay"></div>
+      <div class="modal-start-container">
+        <h2>Welcome to UNO-Solo</h2>
+        <div class="developers-name">
+          <h3>Developed By</h3>
+          <p class="dev-name">Tristan Ehron A. Tumbaga</p>
+          <ul class="contributor-name"> <!-- TODO: add contributor dynamically-->
+            <!-- <li class="dev-name">sdlgk</li> -->
+          </ul>
+        </div> 
+
+        <button class="start-btn">Start</button>
+      </div>
     </div>
 
     <div class="mycards">
@@ -90,12 +101,6 @@
 
       <div class="left-toggle"></div>
       <div class="Info-container">
-        <div class="devs-container">
-          <h1>Developed By</h1>
-          <p class="dev-name">Tristan Ehron A. Tumbaga</p>
-          <p class="contributor-name"></p>
-        </div>
-
         <div class="rule1">
           <div class="rules-img"></div>
           <p class="rules-p">Match cards by color or number and be the first to get rid of them.</p>
