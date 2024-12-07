@@ -58,6 +58,7 @@ html, body {
 }
 
 body{
+  overflow: hidden;
   color:white;
   background-color: black;
   font-family: 'Merienda', sans-serif; /* Fallback to sans-serif */
@@ -136,6 +137,11 @@ h2.player1, h2.player2 {
   flex-direction: row-reverse;
 }
 
+div#yourcards, div#opponentcards {
+  display: flex;
+  justify-content: center;
+}
+
 
 /* deck of cards */
 
@@ -143,6 +149,11 @@ h2.player1, h2.player2 {
   display: flex;
   gap:20px;
   z-index: 1;
+}
+
+.used-cards > img.cardimg{
+  position: absolute;
+  left: calc(50% - clamp(70px, 11vw, 100px));
 }
 
 /*blur deck of cards before start*/
