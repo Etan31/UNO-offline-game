@@ -400,40 +400,19 @@ function selectColor(selectedColor) {
     closeChangeColorModal();
 }
 
-//start button
-const handleStart = ()=>{
-    handleDeckClick();
-    const unblurDeck = document.querySelectorAll('.deck-of-cards-blur');
-    if(unblurDeck){
-        unblurDeck.forEach(element => {
-            console.log("removing class from", element);
-            element.classList.remove('deck-of-cards-blur');});
-    }else{
-        console.log("no elements found")
-    }
-}
-
-
-//start button
+//This will distribute the 7 initial cards when clicked the start button.
 document.querySelector('.start-btn').addEventListener('click', ()=>{
     handleDeckClick();
     const unblurDeck = document.querySelector('.deck-of-cards-blur');
-    if(unblurDeck){
-        unblurDeck.classList.remove('deck-of-cards-blur');
-    }else{
-        console.log("class not found.")
-    }
+    const unhideCards = document.querySelector('.hide-p2-cards');
     const hideStart = document.querySelector('.start-container');
-    if(hideStart){
+
+    if(unblurDeck && hideStart && unhideCards){
+        unblurDeck.classList.remove('deck-of-cards-blur');
+        unhideCards.classList.remove('hide-p2-cards');
         hideStart.classList.add('hide-start');
     }else{
-        console.log("No start button");
-    }
-    const unhideCards = document.querySelector('.hide-p2-cards');
-    if(unhideCards){
-        unhideCards.classList.remove('hide-p2-cards');
-    }else{
-        console.log('no cards hidden');
+        console.log("Either 'deck-of-cards-blur' class, start button, or cards are available.")
     }
 });
 
