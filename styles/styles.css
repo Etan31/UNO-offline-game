@@ -432,3 +432,26 @@ ul.contributor-name li a {
 li.dev-name::marker {
   color: #007acc;
 }
+
+/*Media Query*/
+/*Responsive for tablets <770px*/
+@media screen and (max-width: 770px){
+  img.cardimg {
+    width: 45px;
+    height: auto;
+  }
+
+  .opponentcards::after{
+    background-size: 45px 69px;
+  }
+  .opponentcards{
+    width: 315px;
+  }
+}
+/*Responsive for mobile <435px to 290px*/
+@media screen and (max-width: 435px){
+  .score-container {
+    position: absolute;
+    top: 10%;
+  }
+}
