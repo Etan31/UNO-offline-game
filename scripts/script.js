@@ -8,7 +8,7 @@ let usedCards = [], unusedCards = [];
 let player1Scores = 0, player2Scores = 0;
 let player1DeckofCards = [], player2DeckofCards = [];
 let recentCardColor = '';
-
+let recentCardType = '';
 
 // To the image path of a card
 const getCardImagePath = (card) => {
@@ -102,7 +102,7 @@ const setupInitialUsedCard = (deck) => {
     do {
         initialUsedCard = deck.pop();
         recentCardColor = initialUsedCard.color;
-        console.log("recentCardColor-setup: ", recentCardColor)
+        recentCardType = initialUsedCard.type;
     } while (
         initialUsedCard.color === 'wild' || // Exclude wildcards
         ['plus2', 'plus4', 'changeColor', 'reverse', 'block'].includes(initialUsedCard.type) // Exclude special types
@@ -171,11 +171,14 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     usedCards.push(clickedCard);
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    nextTurn();
                 }
 
                 //Rule: change color selected by player
                 else if (clickedCard.type === 'changeColor'){
                     displayChangeColorModal();
+                    playerTurnListener(playerTurn1);
+                    nextTurn();
                 }
 
                 // Rule: Match by color or type
@@ -189,6 +192,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     usedCards.push(clickedCard);
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    nextTurn();
                 }
 
                 // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
@@ -200,6 +204,8 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     usedCards.push(clickedCard);
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    nextTurn();
+
                 } else {
                     // Handle invalid card play
                     console.warn('Card does not match by color or type.');
@@ -273,7 +279,7 @@ const renderPlayerCards = (player1, player2) => {
         player2Container.appendChild(cardElement);
 
     });
-    console.log(player1DeckofCards)
+    // console.log("player2cards: ",player2DeckofCards);
 };
 
 // onclick of remaining
@@ -357,7 +363,7 @@ function playerTurnListener(playerTurn1) {
                 ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
                  (cardData.type === 'plus4' || cardData.type === 'plus2'));
         } else {
-            isValid = true; // All cards are valid if no last card exists
+            isValid = true; 
         }
 
     });
@@ -417,7 +423,6 @@ document.querySelector('.start-btn').addEventListener('click', ()=>{
 });
 
 
-
 // Game Rules/Info modal
 function displayGameInfoModal() {
     const modal = document.querySelector('.gameInfo-modal');
@@ -433,4 +438,90 @@ function hideGameInfoModal() {
 
     overlay.style.display = 'none'; 
     modal.style.display = 'none'; 
+}
+
+
+function player1turn() {
+    console.log("Player 1's turn");
+}
+
+function player2turn() {
+    let isValidDeck = false; // this will set that player2 has valid card
+    const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
+
+    for(let i=0; i < player2DeckofCards.length; i++){
+
+        const currentCard = player2DeckofCards[i];
+        console.log("Checking card: ", currentCard);
+    
+        if (lastCard) {
+        const [lastCardColor, lastCardType] = lastCard;
+        const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
+
+        // Determine validity based on game rules
+        isValidDeck =
+            currentCard.type === 'plus4' || // Plus4 can always be played
+            currentCard.color === recentCardColor || // Matches color
+            currentCard.type === lastCardType || // Matches type
+            (specialCardTypes.includes(currentCard.type) && currentCard.color === recentCardColor) || // Special card matches color
+            ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
+             (currentCard.type === 'plus4' || currentCard.type === 'plus2'));
+
+
+            if(isValidDeck) {
+                console.log(`Valid found: ${JSON.stringify(currentCard)}`);
+                break;
+            }
+        } else {
+            isValidDeck = true; // No last card means any card is valid
+            console.log(`No last card; all cards are valid. Valid card: ${JSON.stringify(currentCard)}`);
+            break; // Exit loop since any card is valid
+        }
+
+    }
+
+    if(!isValidDeck) {
+        const unusedCard = remainingDeck.pop();
+        player2DeckofCards.push(unusedCard);
+        
+        updateP2Card(player2DeckofCards)
+    } else {
+        console.log("No valid card in the deck!");
+    }
+
+    console.log("Is there a valid deck for Player 2? ", isValidDeck);
+}
+
+function nextTurn() {
+    if (playerTurn1) {
+        player1turn();
+    } else {
+        player2turn();
+    }
+    playerTurn1 = !playerTurn1;
+}
+
+
+function updateP2Card(currentCard) {
+    const player2Container = document.querySelector('#opponentcards');
+    const deckElement = document.querySelector('.stack-cards'); // Select deck element here
+
+    player2Container.innerHTML = '';
+
+    currentCard.forEach((card, index) => {
+        const cardElement = document.createElement('img');
+        cardElement.classList.add('cardimg');
+        cardElement.src = getCardImagePath(card);
+        cardElement.alt = `${card.type.toUpperCase()} ${card.color.toUpperCase()}`;
+
+        // Set initial position (deck location)
+        const deckRect = deckElement.getBoundingClientRect();
+        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.top = `${deckRect.top}px`;
+
+        player2Container.appendChild(cardElement);
+    });
+    playerTurn1 = true;
+    playerTurnListener(playerTurn1);
+    nextTurn();
 }
