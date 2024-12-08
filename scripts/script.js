@@ -440,6 +440,37 @@ function hideGameInfoModal() {
     modal.style.display = 'none'; 
 }
 
+let currentRuleIndex = 0; // display the first rule.
+const rules = document.querySelectorAll('.rules');
+
+showRule(currentRuleIndex);
+function showRule(index) {
+    const leftButton =  document.querySelector('.left-toggle');
+    const rightButton =  document.querySelector('.right-toggle');
+    
+    leftButton.style.display = currentRuleIndex === 0 ? 'none' : 'flex';
+    rightButton.style.display = currentRuleIndex === rules.length - 1 ? 'none' : 'flex'; 
+
+    rules.forEach(rule => rule.style.display = 'none'); //hide all rules
+    rules[index].style.display= 'flex'; // display the current rule
+}
+
+
+// Function to handle left toggle
+function toggleLeftrules() {
+    if (currentRuleIndex > 0) {
+        currentRuleIndex--; // Move to the previous rule
+        showRule(currentRuleIndex);
+    }
+}
+
+// Function to handle right toggle
+function toggleRightrules() {
+    if (currentRuleIndex < rules.length - 1) {
+        currentRuleIndex++; // Move to the next rule
+        showRule(currentRuleIndex);
+    }
+}
 
 function player1turn() {
     console.log("Player 1's turn");
