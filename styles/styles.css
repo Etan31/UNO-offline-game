@@ -322,7 +322,7 @@ p.scores{
   flex-direction: column;
   position: fixed;
   z-index: 3; /* Above the overlay */
-  width: clamp(390px, 50vw, 100vw);
+  width: clamp(250px, 50vw, 650px);
   height: 45%;
   top: 50%;
   left: 50%;
@@ -331,6 +331,80 @@ p.scores{
   background-color: #642B73;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.btnToggle-rules {
+  display: flex;
+  margin: auto;
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+.btnToggle-rules.right{
+  right: clamp(2px, 20vw, 20px);
+}
+
+.btnToggle-rules.left{
+  left: clamp(2px, 20vw, 20px);
+}
+
+img.right {
+  transform: rotate(180deg);
+}
+
+img.left, img.right {
+  width: 30px;
+  height: auto;
+  filter: invert(1);
+  transition: transform 0.3s ease;
+}
+
+img.left:hover {
+  transform: scale(1.5);
+}
+
+img.right:hover {
+  transform: rotate(180deg) scale(1.5);
+}
+
+.rules-container {
+  width: 85%;
+  text-align: left;
+  margin: auto;
+}
+
+.rules {
+  /* display: flex; */
+  display: none;
+  height: 200px;
+  gap:10%;
+}
+
+.rules.active {
+  display: flex;
+}
+
+p.rules-p {
+  display: flex;
+  align-items: center;
+  font-size: clamp(10px, 2vw, 15px);
+  width: 300px;
+  
+}
+
+.rules .rules-img {
+  border: 1px solid red;
+  width: 170px;
+}
+
+.right-toggle, .left-toggle{
+  display: none;
 }
 
 
