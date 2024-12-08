@@ -398,9 +398,15 @@ p.rules-p {
   
 }
 
+img.cards-rule {
+  height: 100%;
+  margin: 0 auto;
+}
+
 .rules .rules-img {
   border: 1px solid red;
   width: 170px;
+  display: flex;
 }
 
 .right-toggle, .left-toggle{
