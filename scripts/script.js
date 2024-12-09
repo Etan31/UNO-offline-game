@@ -16,7 +16,7 @@ const getCardImagePath = (card) => {
         changeColor: './assets/imgs/cards/special/changecolor.png',
         plus4: './assets/imgs/cards/special/plus4.png'
     };
-    
+
     // Check for wildcards
     if (wildcards[card.type]) {
         return wildcards[card.type];
@@ -32,7 +32,8 @@ const getCardImagePath = (card) => {
     return `./assets/imgs/cards/${card.color}/${card.type}${card.color[0]}.png`;
 };
 
-// Render the deck and used card
+let firstCardDropped = false; // Flag to track the first card dropped
+
 const renderDeckAndUsedCard = (usedCard) => {
     const usedCardsContainer = document.querySelector('.used-cards');
     const stackCardsContainer = document.querySelector('.stack-cards');
@@ -41,23 +42,36 @@ const renderDeckAndUsedCard = (usedCard) => {
     if (!Array.isArray(usedCards)) {
         usedCards = [];  // Reset if not an array
     }
-    usedCards.push(usedCard);
 
-    // console.log("Recently used card:", "color: ", usedCard.color, "type: ", usedCard.type);
+    // If the first card hasn't been dropped yet, drop it
+    if (!firstCardDropped) {
+        // Prevent duplicate cards from being added
+        if (!usedCards.some(card => card.type === usedCard.type && card.color === usedCard.color)) {
+            usedCards.push(usedCard);
+            firstCardDropped = true; // Mark that the first card has been dropped
+        } else {
+            console.log('Card already used:', usedCard);
+        }
+    }
 
-    // Append the used card with its image
-    const cardImgElement = document.createElement('img');
-    cardImgElement.classList.add('cardimg');
-    cardImgElement.src = getCardImagePath(usedCard);
-    cardImgElement.alt = `${usedCard.type.toUpperCase()} ${usedCard.color.toUpperCase()}`;
+    // Display all used cards
+    usedCardsContainer.innerHTML = ''; // Clear the previous contents before rendering (if any)
+    usedCards.forEach(card => {
+        const cardImgElement = document.createElement('img');
+        cardImgElement.classList.add('cardimg');
+        cardImgElement.src = getCardImagePath(card);
+        cardImgElement.alt = `${card.type.toUpperCase()} ${card.color.toUpperCase()}`;
 
-    usedCardsContainer.appendChild(cardImgElement);
+        usedCardsContainer.appendChild(cardImgElement);
+    });
 
     // Display the deck stack (placeholder for now)
     stackCardsContainer.innerHTML = `
         <img class="cardimg" src="./assets/imgs/back-cover/back-cover.png" alt="Deck Stack" />
     `;
 };
+
+
 
 // Function to create the deck
 const createDeck = () => {
@@ -118,10 +132,6 @@ unusedCards = shuffleDeck(deck);
 // Set up the initial used card
 const { deck: remainingDeck, initialUsedCard } = setupInitialUsedCard(unusedCards);
 
-// Update global variables
-usedCards.push(initialUsedCard);
-unusedCards = remainingDeck;
-
 
 
 // Render the remaining deck (not used cards, random)
@@ -140,95 +150,104 @@ const renderDeck = (deck) => {
     }
 };
 
+// Update global variables
+usedCards.push(initialUsedCard);
+unusedCards = remainingDeck;
 // Initial rendering
 renderDeckAndUsedCard(initialUsedCard);
 renderDeck(remainingDeck);
 
+console.log("usedCards: ", usedCards);
 
 //This will get 7 initial cards at the start of the game.
 // Function to attach click listener and update used cards
 const attachClickListener = (cardElement, card, playerDeck) => {
-    cardElement.addEventListener('click', () => {
-        if (playerDeck.length > 0) {
-            let clickedCard = card; 
+    if (player1turn) {
+        cardElement.addEventListener('click', () => {
+            if (playerDeck.length > 0) {
+                let clickedCard = card;
 
-            // Ensure usedCards is an array before pushing
-            if (!Array.isArray(usedCards)) {
-                console.error('usedCards is not an array, resetting it to an empty array.');
-                usedCards = []; 
-            }
+                // Ensure usedCards is an array before pushing
+                if (!Array.isArray(usedCards)) {
+                    console.error('usedCards is not an array, resetting it to an empty array.');
+                    usedCards = [];
+                }
 
-            // Get last card information
-            let lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
-
-            if (lastCard) {
+                // Get last card information
+                let lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
                 let [lastCardColor, lastCardType] = lastCard;
                 const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
 
                 // Rule: Plus4 can always be dropped
                 if (clickedCard.type === 'plus4') {
                     console.log('Plus4 card can always be played.');
-                    usedCards.push(clickedCard);
-                    playerTurnListener(playerTurn1);
+                    if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
+                        usedCards.push(clickedCard);
+                    }
                     playerTurn1 = false;
-                    nextTurn();
+                    playerTurnListener(playerTurn1);
+                    nextTurn()
                 }
 
-                //Rule: change color selected by player
-                else if (clickedCard.type === 'changeColor'){
+                // Rule: change color selected by player
+                else if (clickedCard.type === 'changeColor') {
                     displayChangeColorModal();
-                    playerTurnListener(playerTurn1);
+                    if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
+                        usedCards.push(clickedCard);
+                    }
                     playerTurn1 = false;
-                    nextTurn();
+                    playerTurnListener(playerTurn1);
+                    nextTurn()
                 }
 
-                // Rule: Match by color or type
-                else if (
-                    clickedCard.color === recentCardColor ||                // Match by color
-                    clickedCard.type === lastCardType ||                 // Match by type
-                    (specialCardTypes.includes(clickedCard.type) &&      // Special card matches color
-                        clickedCard.color === recentCardColor)
-                ) {
-                    console.log('Card matches! Adding to used cards.');
-                    usedCards.push(clickedCard);
-                    playerTurnListener(playerTurn1);
-                    playerTurn1 = false;
-                    nextTurn();
-                }
-
-                // Rule: Plus2 or Plus4 when last card is Plus2/Plus4
+                // Other rules...
                 else if (
                     (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
                     (clickedCard.type === 'plus4' || clickedCard.type === 'plus2') // Only Plus2 or Plus4 allowed
                 ) {
                     console.log('Special rule: Plus2 or Plus4 match.');
-                    usedCards.push(clickedCard);
-                    playerTurnListener(playerTurn1);
+                    if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
+                        usedCards.push(clickedCard);
+                    }
                     playerTurn1 = false;
-                    nextTurn();
+                    playerTurnListener(playerTurn1);
+                    nextTurn()
+                } 
 
-                } else {
-                    // Handle invalid card play
+                // Matching by color, type, or special cards
+                else if (
+                    clickedCard.color === recentCardColor ||
+                    clickedCard.type === lastCardType ||
+                    specialCardTypes.includes(clickedCard.type)
+                ) {
+                    console.log('matched by color or type or special card: ', usedCards);
+                    if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
+                        usedCards.push(clickedCard);
+                    }
+                    playerTurn1 = false;
+                    playerTurnListener(playerTurn1);
+                    nextTurn()
+                }
+
+                // Invalid card
+                else {
                     console.warn('Card does not match by color or type.');
                     cardElement.classList.add('shake');
-                    setTimeout(() => cardElement.classList.remove('shake'), 500); // Remove shake after animation
-                    return; // Prevent further actions
+                    setTimeout(() => cardElement.classList.remove('shake'), 500);
+                    return;
                 }
+
+                renderDeckAndUsedCard(clickedCard);
+                cardElement.remove(); // Remove card visually
             } else {
-                console.log('No last card. Adding the first card.');
-                usedCards.push(clickedCard);
+                console.warn('No more cards in the deck.');
             }
-
-            // Update the displayed used card immediately after adding the clicked card
-            renderDeckAndUsedCard(clickedCard);  
-
-            // Remove the card visually
-            cardElement.remove();
-        } else {
-            console.warn('No more cards in the deck.');
-        }
-    });
+        });
+    } else {
+        alert('Not player1 turn');
+    }
 };
+
 
 
 
@@ -322,7 +341,7 @@ const dealInitialCards = (deck) => {
 
 // This will return the last card from the deck of used cards.
 function lastUsedCard(usedCards) {
-    let lastcardInfo = usedCards[usedCards.length - 2];
+    let lastcardInfo = usedCards[usedCards.length - 1];
     let cardColor = lastcardInfo.color;
     let cardType = lastcardInfo.type;
 
@@ -343,36 +362,35 @@ function playerTurnListener(playerTurn1) {
         player2Element.style.opacity = '1';
     }
 
-    // Enable valid cards and disable invalid ones
-    const cardElements = document.querySelectorAll('.cardImg'); // Cards have the class "cardImg"
-    const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
+    // // Enable valid cards and disable invalid ones
+    // const cardElements = document.querySelectorAll('.cardImg'); // Cards have the class "cardImg"
+    // const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
 
-    cardElements.forEach((cardElement) => {
-        const cardData = JSON.parse(cardElement.dataset.card); // Assuming card data is in a `data-card` attribute
-        let isValid = false; // Default to invalid
+    // cardElements.forEach((cardElement) => {
+    //     const cardData = JSON.parse(cardElement.dataset.card); // Assuming card data is in a `data-card` attribute
+    //     let isValid = false; // Default to invalid
 
-        if (lastCard) {
-            const [lastCardColor, lastCardType] = lastCard;
-            const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
+    //     if (lastCard) {
+    //         const [lastCardColor, lastCardType] = lastCard;
+    //         const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
 
-            // Determine validity based on game rules
-            isValid =
-                cardData.type === 'plus4' || // Plus4 can always be played
-                cardData.color === recentCardColor || // Matches color
-                cardData.type === lastCardType || // Matches type
-                (specialCardTypes.includes(cardData.type) && cardData.color === recentCardColor) || // Special card matches color
-                ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
-                 (cardData.type === 'plus4' || cardData.type === 'plus2'));
-        } else {
-            isValid = true; 
-        }
+    //         // Determine validity based on game rules
+    //         isValid =
+    //             cardData.type === 'plus4' || // Plus4 can always be played
+    //             cardData.color === recentCardColor || // Matches color
+    //             cardData.type === lastCardType || // Matches type
+    //             (specialCardTypes.includes(cardData.type) && cardData.color === recentCardColor) || // Special card matches color
+    //             ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
+    //                 (cardData.type === 'plus4' || cardData.type === 'plus2'));
+    //     } else {
+    //         isValid = true;
+    //     }
 
-    });
+    // });
 }
 playerTurnListener(playerTurn1);
 
 
-// Changed
 // Pop-up modal to select color if 'changeColor' card has been drop
 function displayChangeColorModal() {
     // Select modal and overlay elements
@@ -392,7 +410,7 @@ function displayChangeColorModal() {
 }
 
 function closeChangeColorModal() {
-// Select modal and overlay elements
+    // Select modal and overlay elements
     const overlay = document.querySelector('.changeColor-overlay');
     const modal = document.querySelector('.changeColor-modal');
 
@@ -408,36 +426,37 @@ function selectColor(selectedColor) {
 }
 
 //This will distribute the 7 initial cards when clicked the start button.
-document.querySelector('.start-btn').addEventListener('click', ()=>{
+document.querySelector('.start-btn').addEventListener('click', () => {
     handleDeckClick();
     const unblurDeck = document.querySelector('.deck-of-cards-blur');
     const unhideCards = document.querySelector('.hide-p2-cards');
     const hideStart = document.querySelector('.start-container');
 
-    if(unblurDeck && hideStart && unhideCards){
+    if (unblurDeck && hideStart && unhideCards) {
         unblurDeck.classList.remove('deck-of-cards-blur');
         unhideCards.classList.remove('hide-p2-cards');
         hideStart.classList.add('hide-start');
-    }else{
+    } else {
         console.log("Either 'deck-of-cards-blur' class, start button, or cards are available.")
     }
 });
+
 
 // Game Rules/Info modal
 function displayGameInfoModal() {
     const modal = document.querySelector('.gameInfo-modal');
     const overlay = document.querySelector('.gameInfo-overlay');
 
-    overlay.style.display = 'block'; 
-    modal.style.display = 'flex'; 
+    overlay.style.display = 'block';
+    modal.style.display = 'flex';
 }
 
 function hideGameInfoModal() {
     const modal = document.querySelector('.gameInfo-modal');
     const overlay = document.querySelector('.gameInfo-overlay');
 
-    overlay.style.display = 'none'; 
-    modal.style.display = 'none'; 
+    overlay.style.display = 'none';
+    modal.style.display = 'none';
 }
 
 let currentRuleIndex = 0; // display the first rule.
@@ -445,15 +464,16 @@ const rules = document.querySelectorAll('.rules');
 
 showRule(currentRuleIndex);
 function showRule(index) {
-    const leftButton =  document.querySelector('.left-toggle');
-    const rightButton =  document.querySelector('.right-toggle');
-    
+    const leftButton = document.querySelector('.left-toggle');
+    const rightButton = document.querySelector('.right-toggle');
+
     leftButton.style.display = currentRuleIndex === 0 ? 'none' : 'flex';
-    rightButton.style.display = currentRuleIndex === rules.length - 1 ? 'none' : 'flex'; 
+    rightButton.style.display = currentRuleIndex === rules.length - 1 ? 'none' : 'flex';
 
     rules.forEach(rule => rule.style.display = 'none'); //hide all rules
-    rules[index].style.display= 'flex'; // display the current rule
+    rules[index].style.display = 'flex'; // display the current rule
 }
+
 
 // Function to handle left toggle
 function toggleLeftrules() {
@@ -476,78 +496,58 @@ function player1turn() {
 }
 
 function player2turn() {
-    let isValidDeck = false; // this will set that player2 has valid card
+    let isValidDeck = false;
     const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
 
-    for(let i=0; i < player2DeckofCards.length; i++){
-
+    for (let i = 0; i < player2DeckofCards.length; i++) {
         const currentCard = player2DeckofCards[i];
-        console.log("Checking card: ", currentCard);
-    
         if (lastCard) {
-        const [lastCardColor, lastCardType] = lastCard;
-        const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
+            const [lastCardColor, lastCardType] = lastCard;
+            const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
 
-        // Determine validity based on game rules
-        isValidDeck =
-            currentCard.type === 'plus4' || // Plus4 can always be played
-            currentCard.color === recentCardColor || // Matches color
-            currentCard.type === lastCardType || // Matches type
-            (specialCardTypes.includes(currentCard.type) && currentCard.color === recentCardColor) || // Special card matches color
-            ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
-             (currentCard.type === 'plus4' || currentCard.type === 'plus2'));
+            isValidDeck =
+                currentCard.type === 'plus4' ||
+                currentCard.color === recentCardColor ||
+                currentCard.type === lastCardType ||
+                (specialCardTypes.includes(currentCard.type) && currentCard.color === recentCardColor) ||
+                ((lastCardType === 'plus4' || lastCardType === 'plus2') &&
+                    (currentCard.type === 'plus4' || currentCard.type === 'plus2'));
 
-
-            if(isValidDeck) {
-                console.log(`Valid found: ${JSON.stringify(currentCard)}`);
-                let toDropCard = currentCard;
-                usedCards.push(toDropCard);
+            if (isValidDeck) {
+                if (!usedCards.some(card => card.type === currentCard.type && card.color === currentCard.color)) {
+                    usedCards.push(currentCard);
+                }
                 playerTurn1 = true;
                 playerTurnListener(playerTurn1);
-
-
-                console.log("usedcards: ", usedCards);
+                nextTurn();
                 break;
-            } else {
-                let getOneCard = unusedCards.pop();
-                player2DeckofCards.push(getOneCard);
-                player1turn = true;
-                // updateP2Card(player2DeckofCards);
             }
 
-
-
         } else {
-            // isValidDeck = true; // No last card means any card is valid
+            isValidDeck = false;
             console.log(`No last card; all cards are valid. Valid card: ${JSON.stringify(currentCard)}`);
-            break; // Exit loop since any card is valid
+            break;
         }
-
     }
 
-    if(!isValidDeck) {
-        const unusedCard = remainingDeck.pop();
-        player2DeckofCards.push(unusedCard);
-        
-        updateP2Card(player2DeckofCards)
-    } else {
-        console.log("No valid card in the deck!");
+    if (!isValidDeck) {
+        const getunusedCard = remainingDeck.pop();
+        player2DeckofCards.push(getunusedCard);
+        updateP2Card(player2DeckofCards);
     }
 
-    console.log("Is there a valid deck for Player 2? ", isValidDeck);
+    console.log("Is there a valid card of Player 2? ", isValidDeck);
 }
 
 function nextTurn() {
-    if (playerTurn1) {
-        player1turn();
-    } else {
+    if (!playerTurn1) {
+        console.log("player2 turn");
         player2turn();
+    } else {
+        console.log("player1 turn");
     }
     playerTurn1 = !playerTurn1;
 }
-
-console.log("usedcards: ", usedCards);
-
 
 
 function updateP2Card(currentCard) {
