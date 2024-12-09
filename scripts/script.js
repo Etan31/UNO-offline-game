@@ -169,8 +169,8 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 if (clickedCard.type === 'plus4') {
                     console.log('Plus4 card can always be played.');
                     usedCards.push(clickedCard);
-                    playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    playerTurn1 = false;
                     nextTurn();
                 }
 
@@ -178,6 +178,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 else if (clickedCard.type === 'changeColor'){
                     displayChangeColorModal();
                     playerTurnListener(playerTurn1);
+                    playerTurn1 = false;
                     nextTurn();
                 }
 
@@ -190,8 +191,8 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 ) {
                     console.log('Card matches! Adding to used cards.');
                     usedCards.push(clickedCard);
-                    playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    playerTurn1 = false;
                     nextTurn();
                 }
 
@@ -202,8 +203,8 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                 ) {
                     console.log('Special rule: Plus2 or Plus4 match.');
                     usedCards.push(clickedCard);
-                    playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    playerTurn1 = false;
                     nextTurn();
 
                 } else {
@@ -422,7 +423,6 @@ document.querySelector('.start-btn').addEventListener('click', ()=>{
     }
 });
 
-
 // Game Rules/Info modal
 function displayGameInfoModal() {
     const modal = document.querySelector('.gameInfo-modal');
@@ -454,7 +454,6 @@ function showRule(index) {
     rules.forEach(rule => rule.style.display = 'none'); //hide all rules
     rules[index].style.display= 'flex'; // display the current rule
 }
-
 
 // Function to handle left toggle
 function toggleLeftrules() {
@@ -501,10 +500,25 @@ function player2turn() {
 
             if(isValidDeck) {
                 console.log(`Valid found: ${JSON.stringify(currentCard)}`);
+                let toDropCard = currentCard;
+                usedCards.push(toDropCard);
+                playerTurn1 = true;
+                playerTurnListener(playerTurn1);
+
+
+                console.log("usedcards: ", usedCards);
                 break;
+            } else {
+                let getOneCard = unusedCards.pop();
+                player2DeckofCards.push(getOneCard);
+                player1turn = true;
+                // updateP2Card(player2DeckofCards);
             }
+
+
+
         } else {
-            isValidDeck = true; // No last card means any card is valid
+            // isValidDeck = true; // No last card means any card is valid
             console.log(`No last card; all cards are valid. Valid card: ${JSON.stringify(currentCard)}`);
             break; // Exit loop since any card is valid
         }
@@ -531,6 +545,9 @@ function nextTurn() {
     }
     playerTurn1 = !playerTurn1;
 }
+
+console.log("usedcards: ", usedCards);
+
 
 
 function updateP2Card(currentCard) {
