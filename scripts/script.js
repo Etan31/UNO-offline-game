@@ -361,32 +361,6 @@ function playerTurnListener(playerTurn1) {
         player1Element.style.opacity = '0.45';
         player2Element.style.opacity = '1';
     }
-
-    // // Enable valid cards and disable invalid ones
-    // const cardElements = document.querySelectorAll('.cardImg'); // Cards have the class "cardImg"
-    // const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
-
-    // cardElements.forEach((cardElement) => {
-    //     const cardData = JSON.parse(cardElement.dataset.card); // Assuming card data is in a `data-card` attribute
-    //     let isValid = false; // Default to invalid
-
-    //     if (lastCard) {
-    //         const [lastCardColor, lastCardType] = lastCard;
-    //         const specialCardTypes = ['plus2', 'plus4', 'reverse', 'changeColor'];
-
-    //         // Determine validity based on game rules
-    //         isValid =
-    //             cardData.type === 'plus4' || // Plus4 can always be played
-    //             cardData.color === recentCardColor || // Matches color
-    //             cardData.type === lastCardType || // Matches type
-    //             (specialCardTypes.includes(cardData.type) && cardData.color === recentCardColor) || // Special card matches color
-    //             ((lastCardType === 'plus4' || lastCardType === 'plus2') && // Special case: Plus4/Plus2 rules
-    //                 (cardData.type === 'plus4' || cardData.type === 'plus2'));
-    //     } else {
-    //         isValid = true;
-    //     }
-
-    // });
 }
 playerTurnListener(playerTurn1);
 
