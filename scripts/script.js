@@ -186,6 +186,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     }
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    drawCardsFromDeck(4, 'player2', 'wild');
                     nextTurn()
                 }
 
@@ -197,6 +198,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     }
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    drawCardsFromDeck(1, 'player2', 'special');
                     nextTurn()
                 }
 
@@ -211,6 +213,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     }
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    drawCardsFromDeck(2, 'player2', 'special');
                     nextTurn()
                 } 
 
@@ -226,6 +229,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     }
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
+                    drawCardsFromDeck(1, 'player2', 'ordinary');
                     nextTurn()
                 }
 
@@ -488,11 +492,13 @@ function player2turn() {
                     (currentCard.type === 'plus4' || currentCard.type === 'plus2'));
 
             if (isValidDeck) {
+                //Bug: there are two card that matches it's color and type.
+                // Checks if no card in 'usedCards' has the same 'type' and 'color' as currentCard.
                 if (!usedCards.some(card => card.type === currentCard.type && card.color === currentCard.color)) {
-                    usedCards.push(currentCard);
+                    usedCards.push(currentCard); // add a condition to automatically make the player1 draw cards if the valid card to be dropped is plus2 or plus4.  
                 }
                 playerTurn1 = true;
-                playerTurnListener(playerTurn1);
+                playerTurnListener(playerTurn1);  
                 nextTurn();
                 break;
             }
@@ -546,4 +552,16 @@ function updateP2Card(currentCard) {
     playerTurn1 = true;
     playerTurnListener(playerTurn1);
     nextTurn();
+}
+
+function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
+
+    const drawnCards = unusedCards.splice(-numberOfCards);
+    if (player !== 'player1' && typeOfCard === 'wild') {
+        player2DeckofCards.push(...drawnCards);
+        updateP2Card(player2DeckofCards)
+    } else {
+        // do nothing
+    }
+    // player === 'player1' ? player1DeckofCards.push(...drawnCards) : player2DeckofCards.push(...drawnCards);
 }
