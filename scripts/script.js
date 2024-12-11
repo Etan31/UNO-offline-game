@@ -516,7 +516,6 @@ function player2turn() {
         updateP2Card(player2DeckofCards);
     }
 
-    console.log("Is there a valid card of Player 2? ", isValidDeck);
 }
 
 function nextTurn() {
