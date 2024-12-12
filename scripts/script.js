@@ -313,7 +313,6 @@ const handleDeckClick = () => {
     // Update the remaining deck
     remainingDeck.splice(0, remainingDeck.length, ...updatedDeck);
 
-    // Render the deck and player cards
     renderDeck(remainingDeck);
     renderPlayerCards(player1, player2);
 
