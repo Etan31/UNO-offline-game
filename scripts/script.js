@@ -353,8 +353,8 @@ function lastUsedCard(usedCards) {
 
 // when changing their move to drop cards.
 function playerTurnListener(playerTurn1) {
-    const player1Element = document.getElementById('player1');
-    const player2Element = document.getElementById('player2');
+    const player1Element = document.getElementById('player1heading');
+    const player2Element = document.getElementById('player2heading');
 
     // Update opacity to indicate the active player
     if (playerTurn1) {
@@ -563,3 +563,31 @@ function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
     }
     // player === 'player1' ? player1DeckofCards.push(...drawnCards) : player2DeckofCards.push(...drawnCards);
 }
+
+
+// SCORING SYSTEM
+const playerScores = {
+    yourscore: 0,
+    opponentscore: 0,
+  };
+  
+// Function to add score
+function addScore(player) {
+if (!(player in playerScores)) {
+    console.error(`Player "${player}" not found.`);
+    return;
+}
+
+// Increment the score and update the DOM
+const playerElement = document.getElementById(player);
+if (playerElement) {
+    playerScores[player]++;
+    playerElement.textContent = playerScores[player];
+} else {
+    console.error(`Element for "${player}" not found.`);
+}
+}
+  
+
+addScore('yourscore');
+addScore('opponentscore');

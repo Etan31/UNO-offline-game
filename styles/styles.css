@@ -415,6 +415,12 @@ img.cards-rule {
 }
 
 
+/* Win/lose modal */
+h1#win, h1#lose {
+  display: none;
+}
+
+
 /* Animations */
 img.cardimg.shake {
   animation: shake 0.5s;
