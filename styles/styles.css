@@ -416,6 +416,10 @@ img.cards-rule {
 
 
 /* Win/lose modal */
+.gameWinner-modal {
+  display: none;
+}
+
 h1#win, h1#lose {
   display: none;
 }
