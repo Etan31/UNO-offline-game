@@ -5,10 +5,15 @@ const WILDCARD_COUNT = 4;
 
 let playerTurn1 = true;
 let usedCards = [], unusedCards = [];
-let player1Scores = 0, player2Scores = 0;
+// let player1Scores = 0, player2Scores = 0;
 let player1DeckofCards = [], player2DeckofCards = [];
 let recentCardColor = '';
 let recentCardType = '';
+
+const playerScores = {
+    player1: 0,
+    player2: 0,
+};
 
 // To the image path of a card
 const getCardImagePath = (card) => {
@@ -564,30 +569,33 @@ function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
     // player === 'player1' ? player1DeckofCards.push(...drawnCards) : player2DeckofCards.push(...drawnCards);
 }
 
+// Map player names to their corresponding HTML IDs
+const playerIdMap = {
+    player1: 'player1score',
+    player2: 'player2score',
+};
 
-// SCORING SYSTEM
-const playerScores = {
-    yourscore: 0,
-    opponentscore: 0,
-  };
-  
 // Function to add score
 function addScore(player) {
-if (!(player in playerScores)) {
-    console.error(`Player "${player}" not found.`);
-    return;
-}
+    if (!(player in playerScores)) {
+        console.error(`Player "${player}" not found.`);
+        return;
+    }
 
-// Increment the score and update the DOM
-const playerElement = document.getElementById(player);
-if (playerElement) {
+    // Increment the score
     playerScores[player]++;
-    playerElement.textContent = playerScores[player];
-} else {
-    console.error(`Element for "${player}" not found.`);
-}
+
+    // Get the corresponding HTML element and update the score
+    const playerElementId = playerIdMap[player];
+    const playerElement = document.getElementById(playerElementId);
+    if (playerElement) {
+        playerElement.textContent = playerScores[player];
+    } else {
+        console.error(`Element for "${player}" not found.`);
+    }
 }
   
-
-addScore('yourscore');
-addScore('opponentscore');
+// Example usage
+addScore('player1'); // Updates Player 1 score
+addScore('player2'); // Updates Player 2 score
+addScore('player1'); // Updates Player 1 score again
