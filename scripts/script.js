@@ -577,6 +577,9 @@ const playerIdMap = {
 
 // Function to add score
 function addScore(player) {
+    // usage
+    // addScore('player1'); // Updates Player 1 score
+    // addScore('player2'); // Updates Player 2 score
     if (!(player in playerScores)) {
         console.error(`Player "${player}" not found.`);
         return;
@@ -594,8 +597,3 @@ function addScore(player) {
         console.error(`Element for "${player}" not found.`);
     }
 }
-  
-// Example usage
-addScore('player1'); // Updates Player 1 score
-addScore('player2'); // Updates Player 2 score
-addScore('player1'); // Updates Player 1 score again
