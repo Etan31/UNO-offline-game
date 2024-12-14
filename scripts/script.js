@@ -560,7 +560,7 @@ function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
         player2DeckofCards.push(...drawnCards);
         updateP2Card(player2DeckofCards)
     } else {
-        // do nothing
+        // do something lol
     }
     // player === 'player1' ? player1DeckofCards.push(...drawnCards) : player2DeckofCards.push(...drawnCards);
 }
@@ -571,7 +571,7 @@ const playerIdMap = {
     player2: 'player2score',
 };
 
-// Function to add score
+// Add score to the player
 function addScore(player) {
     // usage
     // addScore('player1'); // Updates Player 1 score
