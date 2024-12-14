@@ -162,7 +162,6 @@ unusedCards = remainingDeck;
 renderDeckAndUsedCard(initialUsedCard);
 renderDeck(remainingDeck);
 
-console.log("usedCards: ", usedCards);
 
 //This will get 7 initial cards at the start of the game.
 // Function to attach click listener and update used cards
@@ -185,7 +184,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
 
                 // Rule: Plus4 can always be dropped
                 if (clickedCard.type === 'plus4') {
-                    console.log('Plus4 card can always be played.');
+                    displayChangeColorModal();
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
@@ -212,7 +211,6 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     (lastCardType === 'plus4' || lastCardType === 'plus2') && // Last card is Plus4 or Plus2
                     (clickedCard.type === 'plus4' || clickedCard.type === 'plus2') // Only Plus2 or Plus4 allowed
                 ) {
-                    console.log('Special rule: Plus2 or Plus4 match.');
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
@@ -228,7 +226,6 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     clickedCard.type === lastCardType ||
                     specialCardTypes.includes(clickedCard.type)
                 ) {
-                    console.log('matched by color or type or special card: ', usedCards);
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
@@ -403,7 +400,6 @@ function closeChangeColorModal() {
 
 function selectColor(selectedColor) {
     recentCardColor = selectedColor;  // Update recentCardColor with the selected color
-    console.log('Updated recentCardColor:', recentCardColor);
     closeChangeColorModal();
 }
 
