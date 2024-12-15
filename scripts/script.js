@@ -553,6 +553,8 @@ function updateP2Card(currentCard) {
     nextTurn();
 }
 
+// typeOfCard is to determine what wildcard was drawn by player1,
+// This is to automatically get player2 or other player to draw cards based on what player1 has drawn.
 function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
 
     const drawnCards = unusedCards.splice(-numberOfCards);
