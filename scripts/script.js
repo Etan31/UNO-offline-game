@@ -553,6 +553,29 @@ function updateP2Card(currentCard) {
     nextTurn();
 }
 
+function updateP1Card(currentCard) {
+    const player1Container = document.querySelector('#yourcards');
+    const deckElement = document.querySelector('.stack-cards'); // Select deck element here
+
+    player1Container.innerHTML = '';
+
+    currentCard.forEach((card, index) => {
+        const cardElement = document.createElement('img');
+        cardElement.classList.add('cardimg');
+        cardElement.src = getCardImagePath(card);
+        cardElement.alt = `${card.type.toUpperCase()} ${card.color.toUpperCase()}`;
+
+        // Set initial position (deck location)
+        const deckRect = deckElement.getBoundingClientRect();
+        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.top = `${deckRect.top}px`;
+
+        player1Container.appendChild(cardElement);
+    });
+    playerTurn2 = true;
+    playerTurnListener(playerTurn1);
+    nextTurn();
+}
 
 
 // typeOfCard is to determine what wildcard was drawn by player1,
@@ -608,6 +631,7 @@ document.querySelector('.stack-cards').addEventListener('click', ({ target }) =>
     if (target.classList.contains('cardimg')) {
       let drawnCard = unusedCards.pop();
       player1DeckofCards.push(drawnCard);
+      updateP1Card(player1DeckofCards);
     }
 });
   
