@@ -315,7 +315,7 @@ p.scores{
 }
 
 
-/* (Note done yet) */
+/* (TODO: Note done yet) */
 .gameInfo-modal {
   display: none;
   /* display: flex; */
@@ -414,6 +414,36 @@ img.cards-rule {
   display: none;
 }
 
+
+.skip {
+  display: flex;
+  justify-content: start;
+  transform: rotate(180deg);
+}
+
+.skip button {
+  display: flex; /* Align images horizontally */
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-left: 20px;
+  transition: transform 0.3s ease;
+}
+
+.skip img {
+  height: auto;
+  filter: invert(1);
+  transform: rotate(360deg);
+  /* transition: transform 0.3s ease;  */
+  margin-left: -25px;
+  width: 35px;
+}
+
+.skip button:hover {
+  transform: translateX(-20%);
+  margin-left: 15px;
+} 
 
 /* Win/lose modal */
 .gameWinner-modal {
