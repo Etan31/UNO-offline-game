@@ -553,6 +553,8 @@ function updateP2Card(currentCard) {
     nextTurn();
 }
 
+
+
 // typeOfCard is to determine what wildcard was drawn by player1,
 // This is to automatically get player2 or other player to draw cards based on what player1 has drawn.
 function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
@@ -595,3 +597,18 @@ function addScore(player) {
         console.error(`Element for "${player}" not found.`);
     }
 }
+
+document.querySelector('.stack-cards').addEventListener('click', ({ target }) => {
+    // Check if it's Player 1's turn
+    if (!playerTurn1) {
+      alert("It's not your turn yet!"); // Temporary Display. TODO: create modal for better UX.
+      return;
+    }
+  
+    if (target.classList.contains('cardimg')) {
+      let drawnCard = unusedCards.pop();
+      player1DeckofCards.push(drawnCard);
+    }
+});
+  
+  
