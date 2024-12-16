@@ -623,10 +623,10 @@ function addScore(player) {
 
 document.querySelector('.stack-cards').addEventListener('click', ({ target }) => {
     // Check if it's Player 1's turn
-    if (!playerTurn1) {
+    /*if (!playerTurn1) {
       alert("It's not your turn yet!"); // Temporary Display. TODO: create modal for better UX.
       return;
-    }
+    }*/
   
     if (target.classList.contains('cardimg')) {
       let drawnCard = unusedCards.pop();
