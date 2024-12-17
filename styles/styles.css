@@ -578,3 +578,7 @@ li.dev-name::marker {
     top: 10%;
   }
 }
+
+.line {
+  text-align: center;
+}
