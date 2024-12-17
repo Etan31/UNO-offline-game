@@ -181,7 +181,7 @@ renderDeck(remainingDeck);
 //This will get 7 initial cards at the start of the game.
 // Function to attach click listener and update used cards
 const attachClickListener = (cardElement, card, playerDeck) => {
-    if (player1turn) {
+    if (playerTurn1) {
         cardElement.addEventListener('click', () => {
             if (playerDeck.length > 0) {
                 let clickedCard = card;
@@ -377,12 +377,12 @@ function lastUsedCard(usedCards) {
 }
 
 // when changing their move to drop cards.
-function playerTurnListener(playerTurn1) {
+function playerTurnListener(playersTurn) {
     const player1Element = document.getElementById('player1heading');
     const player2Element = document.getElementById('player2heading');
 
     // Update opacity to indicate the active player
-    if (playerTurn1) {
+    if (playersTurn) {
         player1Element.style.opacity = '1';
         player2Element.style.opacity = '0.45';
     } else {
