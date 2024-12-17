@@ -243,6 +243,14 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     return;
                 }
 
+                // update the cards length
+                let cardIndex = playerDeck.indexOf(clickedCard);
+                if (cardIndex > -1) {
+                    playerDeck.splice(cardIndex, 1); 
+                } else {
+                    console.error('Card not found in player deck!');
+                }
+
                 renderDeckAndUsedCard(clickedCard);
                 cardElement.remove(); // Remove card visually
             } else {
@@ -634,5 +642,3 @@ document.querySelector('.stack-cards').addEventListener('click', ({ target }) =>
       updateP1Card(player1DeckofCards);
     }
 });
-  
-  
