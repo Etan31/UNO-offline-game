@@ -176,7 +176,7 @@ img.cardimg {
 }
 
 /*hide p2 cards*/
-.opponentcards::after{
+/* .opponentcards::after{
   content: "";
   position: absolute;
   background-image: url("../assets/imgs/back-cover/back-cover.png") !important;
@@ -186,8 +186,8 @@ img.cardimg {
     width: 100%;
   height: 100%;
   background-size: 55px 84px;
-  background-repeat: repeat-x; /* Repeat horizontally */
-}
+  background-repeat: repeat-x;
+} */
 
 .hide-p2-cards{
   display: none;
@@ -564,9 +564,9 @@ li.dev-name::marker {
     height: auto;
   }
 
-  .opponentcards::after{
+  /* .opponentcards::after{
     background-size: 45px 69px;
-  }
+  } */
   .opponentcards{
     width: 315px;
   }
