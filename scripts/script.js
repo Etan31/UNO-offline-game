@@ -650,7 +650,6 @@ function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
     } else {
         // do something lol
     }
-    // player === 'player1' ? player1DeckofCards.push(...drawnCards) : player2DeckofCards.push(...drawnCards);
 }
 
 // Map player names to their corresponding HTML IDs
@@ -684,7 +683,7 @@ function addScore(player) {
 
 document.querySelector('.stack-cards').addEventListener('click', ({ target }) => {
     if (!playerTurn1) {
-        alert("It's not your turn yet!");
+        alert("It's not your turn yet!"); // Tenporary Display. TODO: create modal for better
         return;
     }
 
@@ -710,6 +709,6 @@ function checkCardNumber(){
 
     
     if(player2DeckofCards.length === 0){
-        alert('player 1 Congrats')
+        alert('Winner player2, Better luck next time ')
     }
 }
