@@ -527,24 +527,34 @@ function player2turn() {
 
             isValidDeck =
                 currentCard.type === 'plus4' ||
-                currentCard.color === recentCardColor ||
+                currentCard.color === lastCardColor ||
                 currentCard.type === lastCardType ||
-                (specialCardTypes.includes(currentCard.type) && currentCard.color === recentCardColor) ||
+                (specialCardTypes.includes(currentCard.type) && currentCard.color === lastCardColor) ||
                 ((lastCardType === 'plus4' || lastCardType === 'plus2') &&
                     (currentCard.type === 'plus4' || currentCard.type === 'plus2'));
 
-            if (isValidDeck) {
-                //Bug: there are two card that matches it's color and type.
-                // Checks if no card in 'usedCards' has the same 'type' and 'color' as currentCard.
-                if (!usedCards.some(card => card.type === currentCard.type && card.color === currentCard.color)) {
-                    usedCards.push(currentCard); // add a condition to automatically make the player1 draw cards if the valid card to be dropped is plus2 or plus4.  
-                }
-                playerTurn1 = true;
-                playerTurnListener(playerTurn1);  
-                nextTurn();
-                break;
-            }
-
+                    if (isValidDeck) {
+                        // Add to usedCards and ensure no duplicates
+                        if (!usedCards.some(card => card.type === currentCard.type && card.color === currentCard.color)) {
+                            usedCards.push(currentCard); 
+                            console.log("Player 2 played card:", currentCard);
+                            
+                            // Update UI immediately after adding the card
+                            renderDeckAndUsedCard(currentCard);
+                    
+                            // Remove from deck and update UI
+                            player2DeckofCards.splice(i, 1);
+                            updateP2Card(player2DeckofCards);
+                        }
+                        updateRecentCard(); 
+                    
+                        // Update turn and state
+                        playerTurn1 = true;
+                        playerTurnListener(playerTurn1);
+                        nextTurn();
+                        return;
+                    }
+                    
         } else {
             isValidDeck = false;
             console.log(`No last card; all cards are valid. Valid card: ${JSON.stringify(currentCard)}`);
