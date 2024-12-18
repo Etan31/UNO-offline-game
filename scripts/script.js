@@ -69,6 +69,7 @@ const renderDeckAndUsedCard = (usedCard) => {
         if (!usedCards.some(card => card.type === usedCard.type && card.color === usedCard.color)) {
             usedCards.push(usedCard);
             firstCardDropped = true; // Mark that the first card has been dropped
+            updateRecentCard(); 
         } else {
             console.log('Card already used:', usedCard);
         }
@@ -177,6 +178,20 @@ unusedCards = remainingDeck;
 renderDeckAndUsedCard(initialUsedCard);
 renderDeck(remainingDeck);
 
+function updateRecentCard() {
+    if (usedCards.length > 0) {
+        const lastCard = usedCards[usedCards.length - 1];
+        recentCardType = lastCard.type;
+        recentCardColor = lastCard.color;
+    } else {
+        recentCardType = null;
+        recentCardColor = null;
+    }
+    console.log("Updated recent card:", { recentCardType, recentCardColor });
+}
+
+
+
 
 //This will get 7 initial cards at the start of the game.
 // Function to attach click listener and update used cards
@@ -203,6 +218,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
+                    updateRecentCard(); 
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                     drawCardsFromDeck(4, 'player2', 'wild');
@@ -215,6 +231,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
+                    updateRecentCard(); 
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                     drawCardsFromDeck(1, 'player2', 'special');
@@ -229,6 +246,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
+                    updateRecentCard(); 
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                     drawCardsFromDeck(2, 'player2', 'special');
@@ -244,6 +262,7 @@ const attachClickListener = (cardElement, card, playerDeck) => {
                     if (!usedCards.some(card => card.type === clickedCard.type && card.color === clickedCard.color)) {
                         usedCards.push(clickedCard);
                     }
+                    updateRecentCard(); 
                     playerTurn1 = false;
                     playerTurnListener(playerTurn1);
                     drawCardsFromDeck(1, 'player2', 'ordinary');
