@@ -580,7 +580,7 @@ function nextTurn() {
     playerTurn1 = !playerTurn1;
 }
 
-
+//update the display of the current cards. 
 function updateP2Card(currentCard) {
     const player2Container = document.querySelector('#opponentcards');
     const deckElement = document.querySelector('.stack-cards'); // Select deck element here
@@ -605,13 +605,19 @@ function updateP2Card(currentCard) {
     nextTurn();
 }
 
+//update the display of the current cards. 
+let isUpdating = false;
+
 function updateP1Card(currentCard) {
+    if (isUpdating) return; // Prevent overlapping updates
+    isUpdating = true;
+
     const player1Container = document.querySelector('#yourcards');
-    const deckElement = document.querySelector('.stack-cards'); // Select deck element here
+    const deckElement = document.querySelector('.stack-cards');
 
-    player1Container.innerHTML = '';
+    player1Container.innerHTML = ''; // Clear previous cards
 
-    currentCard.forEach((card, index) => {
+    currentCard.forEach((card) => {
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
@@ -623,10 +629,13 @@ function updateP1Card(currentCard) {
         cardElement.style.top = `${deckRect.top}px`;
 
         player1Container.appendChild(cardElement);
+
+        // Re-attach click listener here
+        attachClickListener(cardElement, card, player1DeckofCards);
     });
-    playerTurn2 = true;
-    playerTurnListener(playerTurn1);
-    nextTurn();
+    
+
+    isUpdating = false; // Reset flag after updating
 }
 
 
@@ -674,15 +683,33 @@ function addScore(player) {
 }
 
 document.querySelector('.stack-cards').addEventListener('click', ({ target }) => {
-    // Check if it's Player 1's turn
     if (!playerTurn1) {
-      alert("It's not your turn yet!"); // Temporary Display. TODO: create modal for better UX.
-      return;
+        alert("It's not your turn yet!");
+        return;
     }
-  
+
     if (target.classList.contains('cardimg')) {
-      let drawnCard = unusedCards.pop();
-      player1DeckofCards.push(drawnCard);
-      updateP1Card(player1DeckofCards);
+        let drawnCard = unusedCards.pop();
+        player1DeckofCards.push(drawnCard);
     }
+
+    // Only update UI without calling nextTurn here
+    updateP1Card(player1DeckofCards);
+
+    // Move turn-switching logic outside
+    playerTurn1 = false;
+    playerTurnListener(playerTurn1);
+    nextTurn();
 });
+
+
+function checkCardNumber(){
+    if(player1DeckofCards.length === 0){
+        alert('player 1 Congrats')
+    }
+
+    
+    if(player2DeckofCards.length === 0){
+        alert('player 1 Congrats')
+    }
+}
