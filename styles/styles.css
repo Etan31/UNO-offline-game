@@ -564,3 +564,10 @@ li.dev-name::marker {
 .line {
   text-align: center;
 }
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
