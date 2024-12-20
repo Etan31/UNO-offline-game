@@ -1,7 +1,7 @@
 const cardColors = ['red', 'blue', 'green', 'yellow'];
 const cardTypes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'reverse', 'plus2', 'block'];
 const wildcards = ['changeColor', 'plus4'];
-const WILDCARD_COUNT = 4;
+const wildcardCount = 4;
 
 let playerTurn1 = true;
 let usedCards = [], unusedCards = [];
@@ -110,7 +110,7 @@ const createDeck = () => {
     }
 
     for (let wildcard of wildcards) {
-        for (let i = 0; i < WILDCARD_COUNT; i++) {
+        for (let i = 0; i < wildcardCount; i++) {
             deck.push({ color: 'wild', type: wildcard });
         }
     }
