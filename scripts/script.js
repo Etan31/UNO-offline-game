@@ -5,7 +5,6 @@ const WILDCARD_COUNT = 4;
 
 let playerTurn1 = true;
 let usedCards = [], unusedCards = [];
-// let player1Scores = 0, player2Scores = 0;
 let player1DeckofCards = [], player2DeckofCards = [];
 let recentCardColor = '';
 let recentCardType = '';
@@ -60,7 +59,7 @@ const renderDeckAndUsedCard = (usedCard) => {
 
     // Make sure usedCards is an array, add the usedCard
     if (!Array.isArray(usedCards)) {
-        usedCards = [];  // Reset if not an array
+        usedCards = []; 
     }
 
     // If the first card hasn't been dropped yet, drop it
@@ -68,7 +67,7 @@ const renderDeckAndUsedCard = (usedCard) => {
         // Prevent duplicate cards from being added
         if (!usedCards.some(card => card.type === usedCard.type && card.color === usedCard.color)) {
             usedCards.push(usedCard);
-            firstCardDropped = true; // Mark that the first card has been dropped
+            firstCardDropped = true; 
             updateRecentCard(); 
         } else {
             console.log('Card already used:', usedCard);
@@ -121,7 +120,7 @@ const createDeck = () => {
     return deck;
 };
 
-// Function to shuffle the deck
+// Function to shuffle the unused deck of cards
 const shuffleDeck = (deck) => {
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -190,11 +189,7 @@ function updateRecentCard() {
     console.log("Updated recent card:", { recentCardType, recentCardColor });
 }
 
-
-
-
-//This will get 7 initial cards at the start of the game.
-// Function to attach click listener and update used cards
+// This will make the player1 deck of cards clickable.
 const attachClickListener = (cardElement, card, playerDeck) => {
     if (playerTurn1) {
         cardElement.addEventListener('click', () => {
@@ -297,16 +292,12 @@ const attachClickListener = (cardElement, card, playerDeck) => {
 };
 
 
-
-
-
 // This will distribute and display the random deck of card to the players. 
 const renderPlayerCards = (player1, player2) => {
     const player1Container = document.querySelector('#yourcards');
     const player2Container = document.querySelector('#opponentcards');
-    const deckElement = document.querySelector('.stack-cards'); // Select deck element here
+    const deckElement = document.querySelector('.stack-cards');
 
-    // Clear existing cards
     player1Container.innerHTML = '';
     player2Container.innerHTML = '';
 
@@ -321,19 +312,19 @@ const renderPlayerCards = (player1, player2) => {
 
         // Set initial position (deck location)
         const deckRect = deckElement.getBoundingClientRect();
-        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.left = `${deckRect.left}px`; 
         cardElement.style.top = `${deckRect.top}px`;
 
         player1Container.appendChild(cardElement);
 
-        // Attach the click event listener
+        // Attach the click event listener to each cards
         attachClickListener(cardElement, card, player1DeckofCards);
 
     });
 
     // Render Player 2 cards with animation
     player2.forEach((card, index) => {
-        player2DeckofCards.push(card);  // Add the card to player2's deck
+        player2DeckofCards.push(card); 
         const cardElement = document.createElement('img');
         cardElement.classList.add('cardimg');
         cardElement.src = getCardImagePath(card);
@@ -341,13 +332,12 @@ const renderPlayerCards = (player1, player2) => {
 
         // Set initial position (deck location)
         const deckRect = deckElement.getBoundingClientRect();
-        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.left = `${deckRect.left}px`; 
         cardElement.style.top = `${deckRect.top}px`;
 
         player2Container.appendChild(cardElement);
 
     });
-    // console.log("player2cards: ",player2DeckofCards);
 };
 
 // onclick of remaining
@@ -363,19 +353,16 @@ const handleDeckClick = () => {
     // Disable further clicks on the deck after the initial deal
     document.querySelector('.stack-cards').removeEventListener('click', handleDeckClick);
 };
-
 document.querySelector('.stack-cards').addEventListener('click', handleDeckClick);
 
 const dealInitialCards = (deck) => {
 
-    if (deck.length < 14) { // TODO: this should call the function that reshuffle the used cards and put it back to unused deck of card.  
+    if (deck.length < 14) {
         throw new Error('Not enough cards to deal 7 to each player!');
     }
 
-    // Deal 7 cards to Player 1
+    // Deal 7 initial cards to both player
     const player1 = deck.splice(0, 7);
-
-    // Deal 7 cards to Player 2
     const player2 = deck.splice(0, 7);
 
     // Return the updated deck and player cards
@@ -414,7 +401,6 @@ playerTurnListener(playerTurn1);
 
 // Pop-up modal to select color if 'changeColor' card has been drop
 function displayChangeColorModal() {
-    // Select modal and overlay elements
     const overlay = document.querySelector('.changeColor-overlay');
     const modal = document.querySelector('.changeColor-modal');
 
@@ -431,7 +417,6 @@ function displayChangeColorModal() {
 }
 
 function closeChangeColorModal() {
-    // Select modal and overlay elements
     const overlay = document.querySelector('.changeColor-overlay');
     const modal = document.querySelector('.changeColor-modal');
 
@@ -452,6 +437,7 @@ document.querySelector('.start-btn').addEventListener('click', () => {
     const unhideCards = document.querySelector('.hide-p2-cards');
     const hideStart = document.querySelector('.start-container');
 
+    // hide start modal
     if (unblurDeck && hideStart && unhideCards) {
         unblurDeck.classList.remove('deck-of-cards-blur');
         unhideCards.classList.remove('hide-p2-cards');
@@ -470,7 +456,6 @@ function displayGameInfoModal() {
     overlay.style.display = 'block';
     modal.style.display = 'flex';
 }
-
 function hideGameInfoModal() {
     const modal = document.querySelector('.gameInfo-modal');
     const overlay = document.querySelector('.gameInfo-overlay');
@@ -478,7 +463,6 @@ function hideGameInfoModal() {
     overlay.style.display = 'none';
     modal.style.display = 'none';
 }
-
 let currentRuleIndex = 0; // display the first rule.
 const rules = document.querySelectorAll('.rules');
 
@@ -509,10 +493,6 @@ function toggleRightrules() {
         currentRuleIndex++; // Move to the next rule
         showRule(currentRuleIndex);
     }
-}
-
-function player1turn() {
-    console.log("Player 1's turn");
 }
 
 function player2turn() {
@@ -571,8 +551,9 @@ function player2turn() {
 }
 
 function nextTurn() {
-    checkCardNumber();
-    reshuffleUsedCards() // to make the game continuous by checking and reshuffling used cards.
+    checkCardNumber(); //display game winner
+    reshuffleUsedCards() //check an reshuffle used cards.
+
     if (!playerTurn1) {
         console.log("player2 turn");
         player2turn();
@@ -585,7 +566,7 @@ function nextTurn() {
 //update the display of the current cards. 
 function updateP2Card(currentCard) {
     const player2Container = document.querySelector('#opponentcards');
-    const deckElement = document.querySelector('.stack-cards'); // Select deck element here
+    const deckElement = document.querySelector('.stack-cards');
 
     player2Container.innerHTML = '';
 
@@ -597,7 +578,7 @@ function updateP2Card(currentCard) {
 
         // Set initial position (deck location)
         const deckRect = deckElement.getBoundingClientRect();
-        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.left = `${deckRect.left}px`; 
         cardElement.style.top = `${deckRect.top}px`;
 
         player2Container.appendChild(cardElement);
@@ -609,15 +590,14 @@ function updateP2Card(currentCard) {
 
 //update the display of the current cards. 
 let isUpdating = false;
-
 function updateP1Card(currentCard) {
-    if (isUpdating) return; // Prevent overlapping updates
+    if (isUpdating) return; // Prevent overlapping updates, like duplicate turns.
     isUpdating = true;
 
     const player1Container = document.querySelector('#yourcards');
     const deckElement = document.querySelector('.stack-cards');
 
-    player1Container.innerHTML = ''; // Clear previous cards
+    player1Container.innerHTML = ''; 
 
     currentCard.forEach((card) => {
         const cardElement = document.createElement('img');
@@ -627,21 +607,18 @@ function updateP1Card(currentCard) {
 
         // Set initial position (deck location)
         const deckRect = deckElement.getBoundingClientRect();
-        cardElement.style.left = `${deckRect.left}px`;  // Position based on the deck's position
+        cardElement.style.left = `${deckRect.left}px`;
         cardElement.style.top = `${deckRect.top}px`;
 
         player1Container.appendChild(cardElement);
 
-        // Re-attach click listener here
+        // Re-attach click listener of each card.
         attachClickListener(cardElement, card, player1DeckofCards);
     });
     
-
     isUpdating = false; // Reset flag after updating
 }
 
-
-// typeOfCard is to determine what wildcard was drawn by player1,
 // This is to automatically get player2 or other player to draw cards based on what player1 has drawn.
 function drawCardsFromDeck(numberOfCards, player, typeOfCard) {
 
@@ -672,11 +649,10 @@ function addScore(player) {
     // Increment the score
     playerScores[player]++;
 
-    // Get the corresponding HTML element and update the score
     const playerElementId = playerIdMap[player];
     const playerElement = document.getElementById(playerElementId);
     if (playerElement) {
-        playerElement.textContent = playerScores[player];
+        playerElement.textContent = playerScores[player]; //display score
         overlay.style.display = 'none';
         modal.forEach(modal=> {
             modal.style.display = 'none';
@@ -689,7 +665,7 @@ function addScore(player) {
 
 document.querySelector('.stack-cards').addEventListener('click', ({ target }) => {
     if (!playerTurn1) {
-        alert("It's not your turn yet!"); // Tenporary Display. TODO: create modal for better
+        alert("It's not your turn yet!");
         return;
     }
 
@@ -715,14 +691,14 @@ function checkCardNumber() {
     
     // Check if Player 1 wins
     if (player1DeckofCards.length === 1) {
-        overlay.style.display = 'block'; // Show overlay
-        player1Modal.style.display = 'flex'; // Show the winner modal
+        overlay.style.display = 'block'; 
+        player1Modal.style.display = 'flex';
     }
     
     // Check if Player 2 wins
     if (player2DeckofCards.length === 1) {
-        overlay.style.display = 'block'; // Show overlay
-        player2Modal.style.display = 'flex'; // Show the lose modal
+        overlay.style.display = 'block'; 
+        player2Modal.style.display = 'flex';
     }
 }
 
