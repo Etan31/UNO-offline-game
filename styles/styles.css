@@ -288,7 +288,7 @@ p.scores{
 
 /* Game Info / Rules */
 
-.gameInfo-overlay {
+.gameInfo-overlay, .gameWinner-overlay {
   display: none;
   /* display: block; */
   position: fixed;
@@ -302,7 +302,7 @@ p.scores{
 
 
 /* (TODO: Note done yet) */
-.gameInfo-modal {
+.gameInfo-modal, .gameWinner-modal {
   display: none;
   /* display: flex; */
   flex-direction: column;
@@ -431,12 +431,50 @@ img.cards-rule {
 } 
 
 /* Win/lose modal */
-.gameWinner-modal {
+h1#win{
   display: none;
 }
 
-h1#win, h1#lose {
+h2#win{
   display: none;
+}
+
+h1#win, h2#win {
+  gap: 25px;
+  flex-direction: column;
+}
+
+.gameWinner-overlay {
+  display: none;
+  /* display: block; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2; 
+}
+
+
+.gameWinner-modal {
+  display: none;
+  /* display: flex; */
+  position: absolute;
+  border: 1px solid #d042f3;
+  width: clamp(200px, 35vw, 806px);
+  padding: 20px 0;
+  height: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  background-color: #652b7373;
+  box-shadow: 0 0 15px 4px #642B73;
+  text-align: center;
 }
 
 
