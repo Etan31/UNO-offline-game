@@ -571,6 +571,7 @@ function player2turn() {
 }
 
 function nextTurn() {
+    checkCardNumber();
     if (!playerTurn1) {
         console.log("player2 turn");
         player2turn();
@@ -660,9 +661,8 @@ const playerIdMap = {
 
 // Add score to the player
 function addScore(player) {
-    // usage
-    // addScore('player1'); // Updates Player 1 score
-    // addScore('player2'); // Updates Player 2 score
+    const overlay = document.querySelector('.gameWinner-overlay');
+    const modal = document.querySelectorAll('.gameWinner-modal');
     if (!(player in playerScores)) {
         console.error(`Player "${player}" not found.`);
         return;
@@ -676,6 +676,10 @@ function addScore(player) {
     const playerElement = document.getElementById(playerElementId);
     if (playerElement) {
         playerElement.textContent = playerScores[player];
+        overlay.style.display = 'none';
+        modal.forEach(modal=> {
+            modal.style.display = 'none';
+        })
     } else {
         console.error(`Element for "${player}" not found.`);
     }
@@ -702,13 +706,20 @@ document.querySelector('.stack-cards').addEventListener('click', ({ target }) =>
 });
 
 
-function checkCardNumber(){
-    if(player1DeckofCards.length === 0){
-        alert('player 1 Congrats')
-    }
-
+function checkCardNumber() {
+    const overlay = document.querySelector('.gameWinner-overlay');
+    const player1Modal = document.getElementById('win-modal');
+    const player2Modal = document.getElementById('lose-modal');
     
-    if(player2DeckofCards.length === 0){
-        alert('Winner player2, Better luck next time ')
+    // Check if Player 1 wins
+    if (player1DeckofCards.length === 1) {
+        overlay.style.display = 'block'; // Show overlay
+        player1Modal.style.display = 'flex'; // Show the winner modal
+    }
+    
+    // Check if Player 2 wins
+    if (player2DeckofCards.length === 1) {
+        overlay.style.display = 'block'; // Show overlay
+        player2Modal.style.display = 'flex'; // Show the lose modal
     }
 }
