@@ -572,6 +572,7 @@ function player2turn() {
 
 function nextTurn() {
     checkCardNumber();
+    reshuffleUsedCards() // to make the game continuous by checking and reshuffling used cards.
     if (!playerTurn1) {
         console.log("player2 turn");
         player2turn();
@@ -680,6 +681,7 @@ function addScore(player) {
         modal.forEach(modal=> {
             modal.style.display = 'none';
         })
+        resetDeckAndDistribute();
     } else {
         console.error(`Element for "${player}" not found.`);
     }
@@ -721,5 +723,34 @@ function checkCardNumber() {
     if (player2DeckofCards.length === 1) {
         overlay.style.display = 'block'; // Show overlay
         player2Modal.style.display = 'flex'; // Show the lose modal
+    }
+}
+
+
+function resetDeckAndDistribute() {
+    const lastCard = usedCards.pop(); // Keep the last used card
+    unusedCards.push(...usedCards); // Rebuild deck
+    usedCards = [lastCard];
+
+    shuffleDeck(unusedCards);
+
+    // Reset and distribute cards
+    player1DeckofCards = [];
+    player2DeckofCards = [];
+    const { deck: updatedDeck, player1, player2 } = dealInitialCards(unusedCards);
+    unusedCards = updatedDeck;
+
+    // Update UI
+    renderDeck(unusedCards);
+    renderPlayerCards(player1, player2);
+    updateRecentCard();
+}
+
+function reshuffleUsedCards() {
+    if (unusedCards.length <= 2) {
+        const lastCard = usedCards.pop();
+        unusedCards.push(...usedCards);
+        shuffleDeck(unusedCards);
+        usedCards = [lastCard];
     }
 }
