@@ -183,12 +183,16 @@
 
 
     <div class="gameWinner-overlay"></div>
-    <div class="gameWinner-modal">
-      <h1 id="win">Congratulation!</h1>
-      <h1 id="lose">Defeat</h1>
-
-      <button onclick="AddScore()" id="continue">Continue</button>
+    <div class="gameWinner-modal" id="win-modal">
+      <h1>Congratulations, Player 1 Wins!</h1>
+      <button onclick="addScore('player1')" id="continue">Continue</button>
     </div>
+    
+    <div class="gameWinner-modal" id="lose-modal">
+      <h1>Better luck next time, Player 2 Wins!</h1>
+      <button onclick="addScore('player2')" id="continue">Continue</button>
+    </div>
+    
     
 
   </main>
