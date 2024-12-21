@@ -36,7 +36,6 @@ const getCardImagePath = (card) => {
     return `./assets/imgs/cards/${card.color}/${card.type}${card.color[0]}.png`;
 };
 
-// MutationObserver solves this by listening for changes in the DOM 
 // it dynamically reacts to changes in the DOM, and update the card if the DOM changes
 const observer = new MutationObserver(() => {
     const cardImages = document.querySelectorAll('div#opponentcards img');
@@ -52,7 +51,6 @@ observer.observe(opponentCards, { childList: true, subtree: true });
 
 
 let firstCardDropped = false; // Flag to track the first card dropped
-
 const renderDeckAndUsedCard = (usedCard) => {
     const usedCardsContainer = document.querySelector('.used-cards');
     const stackCardsContainer = document.querySelector('.stack-cards');
